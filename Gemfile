@@ -52,13 +52,13 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'rspec-rails'
+  gem "rspec-rails"
 
   # BDD (Behavior-Driven Development)
-  gem 'cucumber-rails', require: false
+  gem "cucumber-rails", require: false
 
   # Code coverage
-  gem 'simplecov', require: false
+  gem "simplecov", require: false
 end
 
 group :development do
