@@ -15,7 +15,5 @@ class CreateItems < ActiveRecord::Migration[8.0]
       t.timestamps
     end
     add_index :items, :title
-    add_index :items, :user_id
-    add_index :items, :category_id
   end
 end
