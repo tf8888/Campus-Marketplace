@@ -1,0 +1,3 @@
+// Entry point for main stylesheet loaded via <%= stylesheet_link_tag :app %>
+// Delegates to application.scss to keep a single source of imports.
+@import "application";
