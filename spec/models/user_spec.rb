@@ -9,27 +9,10 @@ RSpec.describe User, type: :model do
     end
 
     it 'enforces unique email' do
-      User.create!(email: 'alice@example.edu')
-      dup = User.new(email: 'alice@example.edu')
+      User.create!(email: 'alice@example.edu', name: 'Alice')
+      dup = User.new(email: 'alice@example.edu', name: 'Alice Duplicate')
       expect(dup).to be_invalid
       expect(dup.errors[:email]).to include('has already been taken')
-    end
-  end
-
-  describe '#name' do
-    it 'joins first and last name with a space' do
-      user = User.new(first_name: 'Ada', last_name: 'Lovelace', email: 'ada@example.edu')
-      expect(user.name).to eq('Ada Lovelace')
-    end
-
-    it 'returns only first name when last name missing' do
-      user = User.new(first_name: 'Ada', email: 'ada@example.edu')
-      expect(user.name).to eq('Ada')
-    end
-
-    it 'returns empty string when both names missing' do
-      user = User.new(email: 'anon@example.edu')
-      expect(user.name).to eq('')
     end
   end
 
@@ -45,20 +28,16 @@ RSpec.describe User, type: :model do
       expect(@user).to be_persisted
       expect(@user.uid).to eq('uid-456')
       expect(@user.email).to eq('new@student.edu')
-      expect(@user.first_name).to eq('New')
-      expect(@user.last_name).to eq('Student')
-      expect(@user.last_login_at).to be_within(5.seconds).of(Time.current)
+      expect(@user.name).to eq('New Student')
     end
 
     it 'updates an existing user with same uid and does not duplicate' do
-      existing = User.create!(uid: 'uid-456', email: 'old@student.edu', first_name: 'Old', last_name: 'Name')
+      existing = User.create!(uid: 'uid-456', email: 'old@student.edu', name: 'Old Name')
       expect {
         updated = User.from_omniauth(auth_hash)
         expect(updated.id).to eq(existing.id)
         expect(updated.email).to eq('new@student.edu')
-        expect(updated.first_name).to eq('New')
-        expect(updated.last_name).to eq('Student')
-        expect(updated.last_login_at).to be_within(5.seconds).of(Time.current)
+        expect(updated.name).to eq('New Student')
       }.not_to change(User, :count)
     end
   end

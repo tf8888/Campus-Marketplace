@@ -8,8 +8,7 @@ RSpec.configure do |config|
       uid: 'uid-456',
       info: {
         email: 'new@student.edu',
-        first_name: 'New',
-        last_name: 'Student'
+        name: 'New Student'
       }
     )
   end

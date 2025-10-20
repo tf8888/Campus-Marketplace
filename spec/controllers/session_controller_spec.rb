@@ -21,7 +21,7 @@ RSpec.describe "Sessions", type: :request do
     end
 
     it "does not duplicate an existing user with same uid" do
-      existing = User.create!(uid: 'uid-456', email: 'old@student.edu')
+      existing = User.create!(name: "Student", uid: 'uid-456', email: 'old@student.edu')
       expect {
         get "/auth/google_oauth2/callback"
       }.not_to change(User, :count)
@@ -29,8 +29,7 @@ RSpec.describe "Sessions", type: :request do
       expect(response).to redirect_to(root_path)
       existing.reload
       expect(existing.email).to eq('new@student.edu')
-      expect(existing.first_name).to eq('New')
-      expect(existing.last_name).to eq('Student')
+      expect(existing.name).to eq('New Student')
     end
   end
 
@@ -39,7 +38,7 @@ RSpec.describe "Sessions", type: :request do
       # Sign in via OAuth callback to establish session
       get "/auth/google_oauth2/callback"
       expect(response).to redirect_to(root_path)
-      
+
       # Now logout
       get logout_path
 

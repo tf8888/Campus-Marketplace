@@ -85,6 +85,7 @@ group :test do
   gem "webmock"
   # Database cleaner for test isolation
   gem "database_cleaner-active_record"
+end
 
 group :production do
   # Use postgresql as the database for Active Record
