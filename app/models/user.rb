@@ -10,4 +10,12 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
+
+   def self.from_omniauth(auth)
+    where(uid: auth.uid).first_or_initialize.tap do |user|
+      user.email = auth.info.email
+      user.name = auth.info.name
+      user.save!
+    end
+  end
 end

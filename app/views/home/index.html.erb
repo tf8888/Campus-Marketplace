@@ -1,0 +1,22 @@
+<% content_for :title, "Home · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container">
+    <header class="page__header">
+      <h1>
+        <% if @user %>
+          Hello, <%= @user.name.presence || @user.email %> 👋
+        <% else %>
+          Welcome to Campus Exchange
+        <% end %>
+      </h1>
+      <p class="page__sub">Peer-to-peer lending and selling for students.</p>
+    </header>
+
+    <section class="page__content">
+      <div class="card empty">
+        <p>Start by browsing items or add your first listing. This section will show your feed soon.</p>
+      </div>
+    </section>
+  </div>
+</main>

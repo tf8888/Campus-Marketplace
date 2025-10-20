@@ -1,0 +1,10 @@
+// Minimal navbar styles
+.navbar { background: #fff; border-bottom: 1px solid $color-border; }
+.navbar__inner { margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+.navbar__brand { font-weight: 800; }
+.navbar__logo { text-decoration: none; color: $color-text; }
+.navbar__links { list-style: none; display: flex; gap: 12px; margin: 0; padding: 0; }
+.navbar__links a { text-decoration: none; color: $color-text; }
+.navbar__links a:hover { text-decoration: underline; }
+.navbar__actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.navbar__user { color: $color-muted; font-size: 14px; }

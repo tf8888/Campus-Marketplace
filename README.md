@@ -10,7 +10,9 @@ A lightweight web application for students to **lend, borrow, and coordinate ite
 - [Getting Started](#getting-started)
   - [Clone the Repository](#clone-the-repository)
   - [Install Dependencies](#install-dependencies)
+  - [Environment Variables](#environment-variables)
   - [Database Setup](#database-setup)
+- [Compile SCSS Styles](#compile-scss-styles)
 - [Running the Application](#running-the-application)
 - [Testing](#testing)
   - [RSpec (Unit & Integration Tests)](#rspec-unit--integration-tests)
@@ -30,7 +32,7 @@ A lightweight web application for students to **lend, borrow, and coordinate ite
 ## Tech Stack
 
 - **Backend**: Ruby on Rails 8.0+
-- **Database**: PostgreSQL
+- **Database**: Sqlite
 - **Styling**: SCSS
 - **Testing**: RSpec, Cucumber, SimpleCov
 - **JavaScript**: Minimal 
@@ -47,11 +49,6 @@ Before you begin, ensure you have the following installed:
 - **Rails**: 8.0 or higher
   ```bash
   rails --version
-  ```
-
-- **PostgreSQL**: 14 or higher
-  ```bash
-  psql --version
   ```
 
 - **Bundler**: 2.0 or higher
@@ -94,19 +91,27 @@ bundle update
 bundle install
 ```
 
-### Database Setup
+### Environment Variables
 
-#### 1. Configure Database Credentials
-
-Create a `.env` file in the root directory or update `config/database.yml` with your PostgreSQL credentials:
+Create a `.env` file in the root directory and add the following environment variables:
 
 ```bash
-# .env file (optional)
-DATABASE_USERNAME=your_postgres_username
-DATABASE_PASSWORD=your_postgres_password
+# Google OAuth Configuration
+GOOGLE_CLIENT_ID=your_google_client_id_here
+GOOGLE_CLIENT_SECRET=your_google_client_secret_here
 ```
 
-#### 2. Create and Setup Database
+To obtain Google OAuth credentials:
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google+ API
+4. Go to "Credentials" and create OAuth 2.0 Client ID
+5. Set authorized redirect URI to: `http://localhost:3000/auth/google_oauth2/callback`
+6. Copy the Client ID and Client Secret to your `.env` file
+
+### Database Setup
+
+#### 1. Create and Setup Database
 
 ```bash
 # Create the database
@@ -119,7 +124,7 @@ rails db:migrate
 rails db:seed
 ```
 
-#### 3. Setup Test Database
+#### 2. Setup Test Database
 
 ```bash
 # Create test database
@@ -129,35 +134,32 @@ RAILS_ENV=test rails db:create
 RAILS_ENV=test rails db:migrate
 ```
 
-#### Troubleshooting PostgreSQL
+### Compile SCSS Styles
 
-If PostgreSQL is not running:
-
-```bash
-# Start PostgreSQL service
-brew services start postgresql@14
-
-# Check if PostgreSQL is running
-brew services list
-
-# If you need to restart
-brew services restart postgresql@14
-```
-
-If you need to create a PostgreSQL user:
+For development with live SCSS compilation, run the Dart Sass watcher in a separate terminal:
 
 ```bash
-# Access PostgreSQL console
-psql postgres
-
-# Create user (inside psql console)
-CREATE USER your_username WITH PASSWORD 'your_password';
-ALTER USER your_username CREATEDB;
-
-# Exit
-\q
+bin/rails dartsass:watch
 ```
 
+This command will:
+- Watch for changes in your `.scss` files
+- Automatically compile them to CSS
+- Update the styles in real-time during development
+
+**Recommended Development Setup:**
+
+Open two terminal windows:
+
+Terminal 1 - Rails Server:
+```bash
+rails server
+```
+
+Terminal 2 - SCSS Compiler:
+```bash
+bin/rails dartsass:watch
+```
 ## Running the Application
 
 Start the Rails server:
@@ -239,37 +241,10 @@ SimpleCov generates code coverage reports for your test suite.
 
 #### Setup SimpleCov
 
-Add to your `Gemfile` (in the `:test` group):
-
-```ruby
-group :test do
-  gem 'simplecov', require: false
-end
-```
-
 Install:
 
 ```bash
 bundle install
-```
-
-Add to the top of `spec/spec_helper.rb`:
-
-```ruby
-require 'simplecov'
-SimpleCov.start 'rails' do
-  add_filter '/bin/'
-  add_filter '/db/'
-  add_filter '/spec/' # Don't include test code in coverage
-  add_filter '/config/'
-end
-```
-
-Add to the top of `features/support/env.rb`:
-
-```ruby
-require 'simplecov'
-SimpleCov.start 'rails'
 ```
 
 #### Viewing Coverage Reports
@@ -305,7 +280,6 @@ open coverage/index.html
 - Maintain **>90%** code coverage
 - Write tests before implementing features (TDD/BDD)
 - Use **FactoryBot** for test data
-- Use **Faker** for realistic fake data
 - Keep tests fast and isolated
 - Use **database_cleaner** to maintain clean test database state
 
@@ -313,24 +287,11 @@ open coverage/index.html
 
 ### Code Quality Tools
 
-Consider adding these gems for code quality:
-
-```ruby
-group :development do
-  gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false
-  gem 'brakeman', require: false
-end
-```
-
 Run code quality checks:
 
 ```bash
 # Run RuboCop (linter)
 bundle exec rubocop
-
-# Run Brakeman (security scanner)
-bundle exec brakeman
 ```
 
 ### Database Commands
@@ -356,27 +317,8 @@ Deployment instructions will be added once the application is production-ready.
 Potential platforms:
 - Heroku
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add some amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-### Commit Message Guidelines
-
-- Use present tense ("Add feature" not "Added feature")
-- Use imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit first line to 72 characters
-- Reference issues and pull requests
-
 ## License
 
 This project is part of CSCE 606 coursework at Texas A&M University.
-
-## Contact
-
-For questions or issues, please open an issue on GitHub or contact the development team.
 
 ---

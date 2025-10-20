@@ -57,13 +57,34 @@ group :development, :test do
   # BDD (Behavior-Driven Development)
   gem "cucumber-rails", require: false
 
+  # Browser automation for Cucumber tests
+  gem "selenium-webdriver"
+  gem "capybara"
+
   # Code coverage
   gem "simplecov", require: false
+
+  # Factories for tests
+  gem "factory_bot_rails"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+end
+
+gem "omniauth"
+gem "omniauth-google-oauth2"
+
+gem "dotenv-rails", groups: [ :development, :test ]
+
+group :test do
+  # Matchers for concise model/controller specs
+  gem "shoulda-matchers"
+  # HTTP stubbing for specs
+  gem "webmock"
+  # Database cleaner for test isolation
+  gem "database_cleaner-active_record"
 end
 
 group :production do
