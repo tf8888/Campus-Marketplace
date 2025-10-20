@@ -1,17 +1,13 @@
-class User < ApplicationRecord
-  validates :email, presence: true, uniqueness: true
+class User < ApplicationRecord  
+  has_many :items, dependent: :destroy
+  has_many :requests, dependent: :destroy
+  has_many :requested_items, through: :requests, source: :item
+  has_many :sent_messages, class_name: "Message", foreign_key: :sender_id, dependent: :destroy
+  has_many :received_messages, class_name: "Message", foreign_key: :receiver_id, dependent: :destroy
 
-  def self.from_omniauth(auth)
-    where(uid: auth.uid).first_or_initialize.tap do |user|
-      user.email = auth.info.email
-      user.first_name = auth.info.first_name
-      user.last_name = auth.info.last_name
-      user.last_login_at = Time.current
-      user.save!
-    end
-  end
-
-  def name
-    [ first_name, last_name ].compact.join(" ")
-  end
+  validates :name, presence: true, length: { maximum: 50 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, length: { maximum: 255 },
+                    format: { with: VALID_EMAIL_REGEX },
+                    uniqueness: { case_sensitive: false }
 end

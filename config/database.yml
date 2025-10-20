@@ -1,19 +1,6 @@
-# PostgreSQL. Versions 9.3 and up are supported.
-#
-# Install the pg driver:
-#   gem install pg
-# On macOS with Homebrew:
-#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
-# On Windows:
-#   gem install pg
-#       Choose the win32 build.
-#       Install PostgreSQL and put its /bin directory on your path.
-#
-# Configure Using Gemfile
-# gem "pg"
-#
+
 default: &default
-  adapter: postgresql
+  adapter: sqlite3
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
@@ -22,7 +9,7 @@ default: &default
 
 development:
   <<: *default
-  database: csce606_group5_project2_development
+  database: storage/development.sqlite3
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -56,7 +43,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: csce606_group5_project2_test
+  database: storage/test.sqlite3
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -79,20 +66,21 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
+  adapter: postgresql
   primary: &primary_production
     <<: *default
-    database: csce606_group5_project2_production
+    database: storage/production.sqlite3
     username: csce606_group5_project2
     password: <%= ENV["CSCE606_GROUP5_PROJECT2_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: csce606_group5_project2_production_cache
+    database: storage/production_cache.sqlite3
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: csce606_group5_project2_production_queue
+    database: storage/production_queue.sqlite3
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: csce606_group5_project2_production_cable
+    database: storage/production_cable.sqlite3
     migrations_paths: db/cable_migrate
