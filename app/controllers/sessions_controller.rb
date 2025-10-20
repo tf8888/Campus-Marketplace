@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     # Just renders the login page with a Google login button
   end
   def create
-    user_info = request.env['omniauth.auth']
+    user_info = request.env["omniauth.auth"]
     user = User.from_omniauth(user_info)
     session[:user_id] = user.id
     redirect_to root_path, notice: "Signed in as #{user.name}"

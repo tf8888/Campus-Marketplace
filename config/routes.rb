@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "sessions#create"
   get "/auth/failure", to: "sessions#failure"
 
-   get "/login", to: "sessions#login"
-  get '/logout', to: 'sessions#destroy'
+  get "/login", to: "sessions#login"
+  post "/login", to: "sessions#create"
+  get "/logout", to: "sessions#destroy"
 
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
