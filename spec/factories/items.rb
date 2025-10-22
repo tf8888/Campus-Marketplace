@@ -1,16 +1,14 @@
 FactoryBot.define do
   factory :item do
-    association :user
-    association :category # <-- The line you added before, which is correct
-
-    title { "Sample Item" }
-    description { "A great description." }
-    condition { "Good" }
-    location { "Closet" }
+    sequence(:title) { |n| "Sample Item #{n}" }
+    sequence(:description) { |n| "This is a sample item description for item #{n}." }
+    condition { "New" }
     available { true }
-
-    # To satisfy the for_sale_xor_for_lend validation
-    for_sale { true }
     for_lend { false }
+    for_sale { true }
+    location { "Sample Location" }
+    image_url { "http://example.com/sample_image.jpg" }
+    association :user
+    association :category
   end
 end

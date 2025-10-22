@@ -53,9 +53,13 @@
             <%= link_to 'Edit This Listing', edit_item_path(@item), class: 'btn btn--secondary' %>
             <%= link_to 'Delete This Listing', @item, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn--danger' %>
           </div>
-        <% else %>
-          <%# USER IS A GUEST %>
-          <%= link_to "Request Item", "#", class: "btn btn--primary" %>
+        <% elsif current_user %>
+          <%# USER IS LOGGED IN BUT NOT THE OWNER %>
+          <% if current_user.requests.exists?(item_id: @item.id) %>
+            <%= link_to "View Request", request_path(current_user.requests.find_by(item_id: @item.id)), class: "btn btn--secondary" %>
+          <% else %>
+            <%= link_to "Request Item", new_request_path(item_id: @item.id), class: "btn btn--primary" %>
+          <% end %>
         <% end %>
       </div>
     </div>

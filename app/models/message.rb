@@ -1,7 +1,7 @@
 class Message < ApplicationRecord
   belongs_to :request
-  belongs_to :sender
-  belongs_to :receiver
+  belongs_to :sender, class_name: "User"
+  belongs_to :receiver, class_name: "User"
 
   validates :content, presence: true, length: { maximum: 500 }
   validate :sender_and_receiver_cannot_be_the_same
