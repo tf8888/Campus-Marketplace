@@ -1,4 +1,191 @@
 {
+  "Cucumber Features": {
+    "coverage": {
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/controllers/home_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          2,
+          null,
+          null
+        ]
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          17,
+          null,
+          null,
+          null,
+          1,
+          5,
+          null,
+          null,
+          null,
+          1,
+          5,
+          3,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/helpers/home_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/controllers/sessions_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          2,
+          2,
+          2,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/user.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          2,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/category.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/item.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/message.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/request.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      }
+    },
+    "timestamp": 1761169935
+  },
   "RSpec": {
     "coverage": {
       "/Users/htumu/Documents/CSCE606-group5-project2/app/helpers/application_helper.rb": {
@@ -201,6 +388,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1760995974
+    "timestamp": 1761169982
   }
 }
