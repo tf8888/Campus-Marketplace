@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe ItemsController, type: :controller do
   # --- Setup ---
-  
+
   # Create a user and another user using FactoryBot
   # Assumes you have factories defined in spec/factories/users.rb
   let(:user) { FactoryBot.create(:user) }
@@ -20,14 +20,14 @@ RSpec.describe ItemsController, type: :controller do
   let!(:category) { FactoryBot.create(:category) }
 
   let(:valid_attributes) {
-    { 
-      title: 'Test Item', 
-      description: 'A great item', 
-      condition: 'Good', 
+    {
+      title: 'Test Item',
+      description: 'A great item',
+      condition: 'Good',
       location: 'Here',
       for_sale: true,
       for_lend: false,
-      category_id: category.id 
+      category_id: category.id
     }
   }
 
@@ -36,7 +36,7 @@ RSpec.describe ItemsController, type: :controller do
   }
 
   # --- GET #index ---
-  
+
   describe "GET #index" do
     let!(:books_category) { FactoryBot.create(:category, name: "Books") }
     let!(:other_category) { FactoryBot.create(:category, name: "Other") }
@@ -44,7 +44,7 @@ RSpec.describe ItemsController, type: :controller do
     let!(:item1) { FactoryBot.create(:item, title: 'Searchable Book', category: books_category, available: true) }
     let!(:item2) { FactoryBot.create(:item, title: 'Another Item', category: other_category, available: true) }
     let!(:item3) { FactoryBot.create(:item, title: 'Searchable Chair', category: books_category, available: false) }
-    
+
     context "with a search query" do
       it "assigns only matching, available items to @items" do
         get :index, params: { query: 'Searchable' }
@@ -52,7 +52,7 @@ RSpec.describe ItemsController, type: :controller do
         expect(assigns(:items)).not_to include(item2)
         expect(assigns(:items)).not_to include(item3)
       end
-      
+
       it "assigns the search query to @search_query" do
         get :index, params: { query: 'Searchable' }
         expect(assigns(:search_query)).to eq('Searchable')
@@ -64,7 +64,7 @@ RSpec.describe ItemsController, type: :controller do
         get :index
         expect(assigns(:items)).to eq(Item.none)
       end
-      
+
       it "assigns nil to @search_query" do
         get :index
         expect(assigns(:search_query)).to be_nil
@@ -83,7 +83,7 @@ RSpec.describe ItemsController, type: :controller do
       expect(assigns(:my_items)).to include(my_item)
       expect(assigns(:my_items)).not_to include(other_item)
     end
-    
+
     it "renders the my_listings template" do
       get :my_listings
       expect(response).to render_template(:my_listings)
@@ -91,7 +91,7 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   # --- GET #show ---
-  
+
   describe "GET #show" do
     let!(:my_item) { FactoryBot.create(:item, user: user, available: true) }
     let!(:unavailable_item) { FactoryBot.create(:item, user: other_user, available: false) }
@@ -109,7 +109,7 @@ RSpec.describe ItemsController, type: :controller do
         expect(flash[:alert]).to eq('This item is no longer available.')
       end
     end
-    
+
     context "when item is unavailable but owned by current user" do
       it "shows the item successfully" do
         get :show, params: { id: my_unavailable_item.id }
@@ -120,7 +120,7 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   # --- GET #new ---
-  
+
   describe "GET #new" do
     it "assigns a new Item as @item" do
       get :new
@@ -129,7 +129,7 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   # --- POST #create ---
-  
+
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Item" do
@@ -166,7 +166,7 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   # --- GET #edit ---
-  
+
   describe "GET #edit" do
     let!(:my_item) { FactoryBot.create(:item, user: user) }
     let!(:other_item) { FactoryBot.create(:item, user: other_user) }
@@ -184,7 +184,7 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   # --- PATCH #update ---
-  
+
   describe "PATCH #update" do
     let!(:my_item) { FactoryBot.create(:item, user: user, title: 'Original Title') }
     let!(:other_item) { FactoryBot.create(:item, user: other_user) }
@@ -220,7 +220,7 @@ RSpec.describe ItemsController, type: :controller do
         expect(response).to redirect_to(items_path)
         expect(flash[:alert]).to eq('You are not authorized to modify this item.')
       end
-      
+
       it "does not update the item" do
         patch :update, params: { id: other_item.id, item: new_attributes }
         other_item.reload
@@ -230,7 +230,7 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   # --- DELETE #destroy ---
-  
+
   describe "DELETE #destroy" do
     let!(:my_item) { FactoryBot.create(:item, user: user) }
     let!(:other_item) { FactoryBot.create(:item, user: other_user) }
@@ -263,9 +263,9 @@ RSpec.describe ItemsController, type: :controller do
       end
     end
   end
-  
+
   # --- PATCH #mark_unavailable ---
-  
+
   describe "PATCH #mark_unavailable" do
     let!(:my_item) { FactoryBot.create(:item, user: user, available: true) }
     let!(:other_item) { FactoryBot.create(:item, user: other_user, available: true) }

@@ -23,7 +23,7 @@ Given('the following items exist:') do |table|
   table.hashes.each do |item|
     user = User.find_by(email: item['user'])
     category = Category.find_by(name: item['category'])
-    
+
     Item.create!(
       title: item['title'],
       description: item['description'],
@@ -83,7 +83,7 @@ When('I fill in the item form with:') do |table|
   table.hashes.each do |row|
     field = row['field']
     value = row['value']
-    
+
     case field
     when 'Category'
       select value, from: 'item_category_id'
@@ -102,7 +102,7 @@ end
 
 When('I fill in {string} with {string}') do |field, value|
   field_name = "item_#{field.downcase.gsub(' ', '_')}"
-  
+
   # Special handling for Category field (it's a select dropdown)
   if field == 'Category'
     select value, from: 'item_category_id'

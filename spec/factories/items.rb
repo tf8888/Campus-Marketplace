@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :item do
-    association :user 
+    association :user
     association :category # <-- The line you added before, which is correct
 
     title { "Sample Item" }
