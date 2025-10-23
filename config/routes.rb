@@ -18,9 +18,9 @@ Rails.application.routes.draw do
     collection do
       get :my_listings
     end
-    
+
     member do
-      patch :mark_unavailable 
+      patch :mark_unavailable
     end
   end
 end
