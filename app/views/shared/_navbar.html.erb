@@ -5,8 +5,8 @@
     </div>
     <% if defined?(current_user) && current_user.present? %>
         <ul class="navbar__links">
-            <li><%= link_to "Browse", "#" %></li>
-            <li><%= link_to "My Listings", "#" %></li>
+            <li><%= link_to "Browse", items_path %></li>
+            <li><%= link_to "My Listings", my_listings_items_path %></li>
         </ul>
     <% end %>
 

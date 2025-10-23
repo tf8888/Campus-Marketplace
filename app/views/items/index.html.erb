@@ -1,0 +1,68 @@
+<% content_for :title, "Browse Items · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container">
+    <header class="page__header">
+      <h1>Browse Items</h1>
+      <p class="page__sub">Find what you're looking for.</p>
+    </header>
+
+    <%# --- SEARCH BAR --- %>
+    <%# This form submits back to this same page (items_path) using GET %>
+    <%= form_with(url: items_path, method: :get, class: "search-form") do |form| %>
+      <%= form.text_field :query, 
+            value: @search_query, 
+            placeholder: "Search for laptops, textbooks, etc...",
+            class: "search-form-input" %>
+      <%= form.submit "Search", class: "btn btn--primary" %>
+    <% end %>
+
+    <%# --- RESULTS SECTION --- %>
+    <section class="page__content">
+      
+      <%# This is the key: only show results if a search was performed %>
+      <% if params[:query].present? %>
+        
+        <%# Check if the search returned any items %>
+        <% if @items.any? %>
+          <h3 class="search-results-heading">Results for "<%= @search_query %>"</h3>
+          
+          <%# We use the same card grid as the homepage for consistent styling %>
+          <div class="items-container">
+            <% @items.each do |item| %>
+              <%= link_to item_path(item), class: "item-card-link" do %>
+                <div class="item-card">
+                  <div class="item-card-content">
+                    <h3 class="item-card-title"><%= item.title %></h3>
+                    <p class="item-card-description"><%= truncate(item.description, length: 100) %></p>
+                    <div class="item-card-footer">
+                      <span class="item-card-condition"><strong>Condition:</strong> <%= item.condition %></span>
+                      <% if item.for_sale? %>
+                        <span class="item-card-tag sale">For Sale</span>
+                      <% else %>
+                        <span class="item-card-tag lend">For Lend</span>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+
+        <% else %>
+          <%# This shows if the search had 0 results %>
+          <div class="card empty">
+            <p>No items found matching "<%= @search_query %>".</p>
+          </div>
+        <% end %>
+
+      <% else %>
+        <%# This is the default state before any search %>
+        <div class="card empty">
+          <p>Please enter a keyword above to search for items.</p>
+        </div>
+      <% end %>
+    </section>
+    
+  </div>
+</main>

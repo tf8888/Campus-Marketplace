@@ -13,10 +13,59 @@
       <p class="page__sub">Peer-to-peer lending and selling for students.</p>
     </header>
 
+    <%# --- START: Updated Content Section --- %>
     <section class="page__content">
-      <div class="card empty">
-        <p>Start by browsing items or add your first listing. This section will show your feed soon.</p>
-      </div>
+      
+      <%# Check if the @items variable from your controller has any items %>
+      <% if @items.any? %>
+        
+        <%# We use the CSS classes from the previous suggestion for the grid %>
+        <div class="items-container">
+          <% @items.each do |item| %>
+            <%= link_to item_path(item), class: "item-card-link" do %>
+              <div class="item-card">
+                
+                <%# Optional: Add image here 
+                if item.image_url.present?
+                  image_tag item.image_url, alt: item.title, class: "item-card-image"
+                end 
+                %>
+
+                <div class="item-card-content">
+                  <h3 class="item-card-title"><%= item.title %></h3>
+                  
+                  <p class="item-card-description">
+                    <%= truncate(item.description, length: 100) %>
+                  </p>
+                  
+                  <div class="item-card-footer">
+                    <span class="item-card-condition">
+                      <strong>Condition:</strong> <%= item.condition %>
+                    </span>
+                    
+                    <% if item.for_sale? %>
+                      <span class="item-card-tag sale">For Sale</span>
+                    <% else %>
+                      <span class="item-card-tag lend">For Lend</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+      <% else %>
+        
+        <%# This is your original "empty state" card. It will now only
+            show if there are no items available. %>
+        <div class="card empty">
+          <p>No items are available right now. Why not add your first listing?</p>
+        </div>
+
+      <% end %>
     </section>
+    <%# --- END: Updated Content Section --- %>
+    
   </div>
 </main>
