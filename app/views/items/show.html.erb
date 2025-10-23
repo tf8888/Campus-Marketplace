@@ -1,0 +1,64 @@
+<%# Set the page title to the item's title %>
+<% content_for :title, "#{@item.title} · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container item-show-container">
+
+    <header class="page__header">
+      <%# Display For Sale/Lend tag %>
+      <% if @item.for_sale? %>
+        <span class="item-show-tag sale">For Sale</span>
+      <% else %>
+        <span class="item-show-tag lend">For Lend</span>
+      <% end %>
+
+      <h1><%= @item.title %></h1>
+    </header>
+
+    <div class="item-show-content">
+      <div class="item-show-details">
+        <%# Description Section %>
+        <% if @item.description.present? %>
+          <p class="item-show-description"><%= @item.description %></p>
+        <% end %>
+
+        <%# Details List %>
+        <ul class="item-details-list">
+          <li>
+            <strong>Condition:</strong>
+            <span><%= @item.condition %></span>
+          </li>
+          <li>
+            <strong>Location:</strong>
+            <span><%= @item.location %></span>
+          </li>
+          <li>
+            <strong>Posted by:</strong>
+            <%# Assuming your User model has a 'name' attribute %>
+            <span><%= @item.user.name %></span>
+          </li>
+          <li>
+            <strong>Category:</strong>
+            <%# Assuming your Category model has a 'name' attribute %>
+            <span><%= @item.category.name %></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="item-show-actions">
+        <% if @item.user == current_user %>
+          <%# USER IS THE OWNER %>
+          <div class="item-owner-actions">
+            <p><strong>Owner Menu</strong></p>
+            <%= link_to 'Edit This Listing', edit_item_path(@item), class: 'btn btn--secondary' %>
+            <%= link_to 'Delete This Listing', @item, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn--danger' %>
+          </div>
+        <% else %>
+          <%# USER IS A GUEST %>
+          <%= link_to "Request Item", "#", class: "btn btn--primary" %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</main>

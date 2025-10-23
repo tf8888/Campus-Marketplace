@@ -13,4 +13,14 @@ Rails.application.routes.draw do
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
+
+  resources :items do
+    collection do
+      get :my_listings
+    end
+
+    member do
+      patch :mark_unavailable
+    end
+  end
 end
