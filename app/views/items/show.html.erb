@@ -35,7 +35,7 @@
           <li>
             <strong>Posted by:</strong>
             <%# Assuming your User model has a 'name' attribute %>
-            <span><%= @item.user.name %></span>
+            <span><%= link_to @item.user.name, user_path(@item.user) %></span>
           </li>
           <li>
             <strong>Category:</strong>

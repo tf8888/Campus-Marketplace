@@ -1,0 +1,33 @@
+<% content_for :title, "#{@user.name}'s Profile · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container">
+
+    <header class="page__header">
+      <h1><%= @user.name %></h1>
+      <p>All items listed by <%= @user.name %>:</p>
+    </header>
+
+    <div class="items-list-container">
+      <% if @items.any? %>
+        <% @items.each do |item| %>
+          <div style="border: 1px solid #eee; padding: 16px; margin-bottom: 16px;">
+            <h4>
+              <%= link_to item.title, item_path(item) %>
+              <% if item.for_sale? %>
+                <span style="font-size: 0.8em; color: green; margin-left: 8px;">For Sale</span>
+              <% else %>
+                <span style="font-size: 0.8em; color: blue; margin-left: 8px;">For Lend</span>
+              <% end %>
+            </h4>
+            <p><%= item.description %></p>
+            <small>Condition: <%= item.condition %></small>
+          </div>
+        <% end %>
+      <% else %>
+        <p><%= @user.name %> has no items listed.</p>
+      <% end %>
+    </div>
+
+  </div>
+</main>
