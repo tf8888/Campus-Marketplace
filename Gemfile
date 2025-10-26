@@ -85,6 +85,7 @@ group :test do
   gem "webmock"
   # Database cleaner for test isolation
   gem "database_cleaner-active_record"
+  gem "rails-controller-testing"
 end
 
 group :production do

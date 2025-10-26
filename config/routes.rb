@@ -23,4 +23,6 @@ Rails.application.routes.draw do
       patch :mark_unavailable
     end
   end
+
+  resources :users, only: [ :show ]
 end
