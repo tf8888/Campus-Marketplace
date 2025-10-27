@@ -1,0 +1,36 @@
+<%# filepath: /home/arkel/code/CSCE606-group5-project2/app/views/requests/show.html.erb %>
+<%# Set the page title to the request's item title %>
+<% content_for :title, "Request for #{@request.item.title}" %>
+
+<main class="page" role="main">
+  <div class="page__container request-show-container">
+
+    <header class="page__header">
+      <h1>Request for <%= link_to @request.item.title, item_path(@request.item) %></h1>
+      <p>Conversation between you and <%= link_to @request.item.user.name, user_path(@request.item.user) %></p>
+    </header>
+
+    <div class="request-show-actions">
+      <%= link_to "Back to requests", requests_user_path(current_user), class: "btn btn--secondary" %>
+      <%= button_to "Destroy this request", @request, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn--danger" %>
+    </div>
+
+    <div class="request-show-content">
+      <%# Messaging Conversation Section %>
+      <div id="messages" class="messages-conversation">
+        <div class="message message--sent">
+          <p class="message__content"><%= @request.message %></p>
+          <span class="message__timestamp"><%= @request.created_at.strftime("%b %d, %Y %I:%M %p") %></span>
+        </div>
+        <% @messages.each do |message| %>
+          <%= render partial: "messages/message", locals: { message: message } %>
+        <% end %>
+      </div>
+
+      <%# New Message Form %>
+      <div class="new-message-form">
+        <%= render partial: "messages/form", locals: { request: @request } %>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,15 @@
+<h1>Requests for Items</h1>
+
+<% if @requests.present? %>
+    <ul>
+        <% @requests.each do |request| %>
+            <li>
+                <strong>Item:</strong> <%= request.item.title %><br>
+                <strong>Status:</strong> <%= request.status %>
+                <%= link_to "View Request", request_path(request) %>
+            </li>
+        <% end %>
+    </ul>
+<% else %>
+    <p>No requests found.</p>
+<% end %>

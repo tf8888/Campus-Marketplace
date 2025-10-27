@@ -17,10 +17,6 @@ class ItemsController < ApplicationController
     @search_query = params[:query]
   end
 
-  def my_listings
-    @my_items = current_user.items.order(created_at: :desc)
-  end
-
   def show
     if !@item.available && @item.user != current_user
       redirect_to items_path, alert: "This item is no longer available."
