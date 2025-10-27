@@ -54,6 +54,8 @@ group :development, :test do
 
   gem "rspec-rails"
 
+  gem "rails-controller-testing"
+
   # BDD (Behavior-Driven Development)
   gem "cucumber-rails", require: false
 

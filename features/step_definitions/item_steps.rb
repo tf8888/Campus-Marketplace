@@ -153,10 +153,6 @@ When('I search for {string}') do |query|
   click_button 'Search'
 end
 
-When('I click {string}') do |button|
-  click_link_or_button button
-end
-
 When('I try to delete the item {string}') do |title|
   item = Item.find_by(title: title)
   # Attempt to send DELETE request directly
