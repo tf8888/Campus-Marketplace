@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_20_205810) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_28_190404) do
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -69,6 +69,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_205810) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uid"
+    t.string "address"
+    t.string "contact_number"
+    t.boolean "verified", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["uid"], name: "index_users_on_uid"
