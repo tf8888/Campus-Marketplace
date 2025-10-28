@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
 before_action :authenticate_user!
-  before_action :set_user 
+  before_action :set_user
 
   def show
     redirect_to edit_profile_path
