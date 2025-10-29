@@ -4,7 +4,7 @@ class DevelopmentController < ApplicationController
   def login_as
     user = User.find(params[:user_id])
     session[:user_id] = user.id
-    
+
     redirect_to root_path, notice: "Logged in as #{user.name} (User ID: #{user.id})"
   end
 

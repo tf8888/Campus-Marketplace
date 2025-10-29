@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   if Rails.env.development?
     get "/dev/login_as/:user_id", to: "development#login_as", as: :dev_login
   end
@@ -33,7 +32,7 @@ Rails.application.routes.draw do
 
   resources :requests, only: [ :show, :new, :create ] do
     resources :messages, only: [ :create ]
-    resource :rating, only: [ :new, :create ], controller: 'ratings'
+    resource :rating, only: [ :new, :create ], controller: "ratings"
   end
 
   resources :users, only: [ :show ] do
