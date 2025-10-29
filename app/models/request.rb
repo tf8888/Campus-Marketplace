@@ -3,6 +3,7 @@ class Request < ApplicationRecord
   belongs_to :user
 
   has_many :messages, dependent: :destroy
+  has_one :rating, dependent: :destroy
 
   validates :item_id, presence: true
   validates :user_id, presence: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_28_190404) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_29_222940) do
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -50,6 +50,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_28_190404) do
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.integer "score", null: false
+    t.integer "rater_id", null: false
+    t.integer "ratee_id", null: false
+    t.integer "request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ratee_id"], name: "index_ratings_on_ratee_id"
+    t.index ["rater_id", "request_id"], name: "index_ratings_on_rater_id_and_request_id", unique: true
+    t.index ["rater_id"], name: "index_ratings_on_rater_id"
+    t.index ["request_id"], name: "index_ratings_on_request_id"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.integer "item_id", null: false
     t.integer "user_id", null: false
@@ -82,6 +95,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_28_190404) do
   add_foreign_key "messages", "requests"
   add_foreign_key "messages", "users", column: "receiver_id"
   add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "ratings", "requests"
+  add_foreign_key "ratings", "users", column: "ratee_id"
+  add_foreign_key "ratings", "users", column: "rater_id"
   add_foreign_key "requests", "items"
   add_foreign_key "requests", "users"
 end
