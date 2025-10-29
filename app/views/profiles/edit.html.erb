@@ -1,0 +1,64 @@
+<% content_for :title, "My Profile · Campus Exchange" %>
+<main class="page" role="main">
+  <div class="page__container" style="max-width: 768px;">
+
+    <header class="page__header">
+      <h1>My Profile</h1>
+    </header>
+
+    <div class="profile-edit-card">
+      
+      <%= form_with(model: @user, url: profile_path, method: :patch) do |f| %>
+        
+        <h3>Account Information</h3>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="text" value="<%= @user.email %>" class="form-control-readonly" readonly>
+          <small>Your email is managed via Google OAuth and cannot be changed here.</small>
+        </div>
+
+
+        <div class="form-group">
+          <label>Verification Status</label>
+          <div>
+            <% if @user.verified? %>
+              <span class="badge badge-verified">
+                ✔ Verified
+              </span>
+            <% else %>
+              <span class="badge badge-not-verified">
+                Not Verified
+              </span>
+            <% end %>
+          </div>
+        </div>
+
+        <hr style="margin: 2rem 0;">
+        
+        <h3>Editable Details</h3>
+        
+        <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :address %>
+          <%= f.text_area :address, class: "form-control", rows: 3, placeholder: "e.g., 123 Main St, College Station, TX" %>
+        </div>
+        
+        <div class="form-group">
+            <%= f.label :contact_number, "Contact Number" %>
+            <%= f.telephone_field :contact_number, class: "form-control", placeholder: "e.g., (979) 123-4567" %>
+        </div>
+
+        <div class="form-actions" style="margin-top: 2rem;">
+          <%= f.submit "Update Profile", class: "btn btn--primary" %>
+        </div>
+        
+      <% end %>
+      
+    </div>
+
+  </div>
+</main>

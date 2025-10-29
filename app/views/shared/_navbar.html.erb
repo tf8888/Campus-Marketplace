@@ -13,6 +13,7 @@
 
     <div class="navbar__actions">
       <% if defined?(current_user) && current_user.present? %>
+        <%= link_to "Profile", edit_profile_path, class: "btn btn--secondary" %>
         <%= link_to "Logout", logout_path, class: "btn btn--primary" %>
       <% end %>
     </div>

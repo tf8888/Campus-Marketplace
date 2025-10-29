@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "profiles/show"
+  get "profiles/edit"
+  get "profiles/update"
   resources :requests
   get "home/index"
   root "home#index"
@@ -32,5 +35,9 @@ Rails.application.routes.draw do
       get :items
       get :requests
     end
+  end
+
+  resource :profile, only: [ :show, :edit, :update ]
+  resources :users, only: [ :show ] do
   end
 end
