@@ -1,44 +1,68 @@
 {
-  "RSpec": {
+  "Cucumber Features": {
     "coverage": {
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/helpers/application_helper.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/user.rb": {
         "lines": [
           1,
-          null
-        ]
-      },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/helpers/home_helper.rb": {
-        "lines": [
           1,
-          null
-        ]
-      },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/helpers/items_helper.rb": {
-        "lines": [
           1,
-          null
-        ]
-      },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/controllers/home_controller.rb": {
-        "lines": [
+          1,
           1,
           1,
           null,
           1,
-          2,
+          1,
+          1,
           null,
-          2,
           null,
-          2,
+          null,
+          1,
+          0,
+          0,
+          0,
           0,
           null,
           null,
-          2,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/category.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/controllers/home_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
           null,
           null
         ]
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/controllers/application_controller.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null,
@@ -47,24 +71,237 @@
           null,
           null,
           1,
-          15,
+          63,
           null,
           null,
           null,
           1,
-          5,
+          9,
           null,
           null,
           null,
           1,
-          5,
-          3,
+          9,
+          9,
           null,
           null,
           null
         ]
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/controllers/items_controller.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/helpers/home_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/helpers/items_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/controllers/sessions_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/controllers/items_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          4,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          4,
+          null,
+          null,
+          4,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          5,
+          null,
+          null,
+          1,
+          5,
+          5,
+          null,
+          5,
+          0,
+          null,
+          5,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          null,
+          1,
+          3,
+          null,
+          null,
+          1,
+          5,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/item.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          9,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/message.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/request.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      }
+    },
+    "timestamp": 1761246887
+  },
+  "RSpec": {
+    "coverage": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/helpers/home_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/helpers/items_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/controllers/items_controller.rb": {
         "lines": [
           1,
           1,
@@ -147,19 +384,65 @@
           null
         ]
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/controllers/users_controller.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/controllers/application_controller.rb": {
         "lines": [
-          1,
           1,
           null,
           1,
-          4,
-          4,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
           null,
           null
         ]
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/category.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/user.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/category.rb": {
         "lines": [
           1,
           1,
@@ -169,14 +452,7 @@
           null
         ]
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/application_record.rb": {
-        "lines": [
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/item.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/item.rb": {
         "lines": [
           1,
           1,
@@ -192,32 +468,14 @@
           1,
           null,
           1,
-          80,
+          65,
           2,
           null,
           null,
           null
         ]
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/message.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          0,
-          null,
-          null
-        ]
-      },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/request.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/request.rb": {
         "lines": [
           1,
           1,
@@ -239,56 +497,52 @@
           null
         ]
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/models/user.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/controllers/home_controller.rb": {
         "lines": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
+          0,
+          0,
           null,
-          1,
-          1,
-          1,
+          0,
+          0,
           null,
+          0,
           null,
+          0,
+          0,
+          0,
           null,
-          1,
-          6,
-          6,
-          6,
-          6,
-          null,
-          null,
-          null
-        ]
+          0,
+          0,
+          0
+        ],
+        "branches": {}
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/controllers/sessions_controller.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/controllers/sessions_controller.rb": {
         "lines": [
-          1,
-          1,
+          0,
+          0,
           null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           null,
-          1,
-          4,
-          4,
-          4,
-          4,
+          0,
+          0,
+          0,
+          0,
           null,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          null,
-          null
-        ]
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/jobs/application_job.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/jobs/application_job.rb": {
         "lines": [
           0,
           null,
@@ -300,8 +554,27 @@
         ],
         "branches": {}
       },
-      "/Users/htumu/Documents/CSCE606-group5-project2/app/mailers/application_mailer.rb": {
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/mailers/application_mailer.rb": {
         "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/Users/malvika/Desktop/TexasA&M/606-SWE/PROJECT2/CSCE606-group5-project2/app/models/message.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
           0,
           0,
           0,
@@ -310,6 +583,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1761576358
+    "timestamp": 1761243631
   }
 }
