@@ -1,0 +1,50 @@
+<% content_for :title, "My Listings · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container">
+    <header class="page__header">
+      <h1>My Listings</h1>
+      <p class="page__sub">Manage your items for sale and for lend.</p>
+    </header>
+
+    <div class="items-container">
+      <%# --- 1. THE "ADD NEW" CARD --- %>
+      <%# This is a special card that links to the 'new' item page %>
+      <a href="<%= new_item_path %>" class="item-card-link">
+        <div class="item-card add-new-card">
+          <span>+</span>
+          <h3>Add a New Listing</h3>
+        </div>
+      </a>
+
+      <%# --- 2. THE USER'S EXISTING ITEMS --- %>
+      <% @items.each do |item| %>
+        <%= link_to item_path(item), class: "item-card-link" do %>
+          <div class="item-card">
+            <div class="item-card-content">
+              <h3 class="item-card-title"><%= item.title %></h3>
+              <p class="item-card-description"><%= truncate(item.description, length: 100) %></p>
+              <div class="item-card-footer">
+                <span class="item-card-condition">
+                  <strong>Condition:</strong> <%= item.condition %>
+                </span>
+                <% if item.for_sale? %>
+                  <span class="item-card-tag sale">For Sale</span>
+                <% else %>
+                  <span class="item-card-tag lend">For Lend</span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      
+      <%# Show a message if they have no items %>
+      <% if @items.empty? %>
+        <div class="card empty">
+          <p>You haven't listed any items yet.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,36 @@
+<% content_for :title, "New Request · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container" style="max-width: 700px;">
+    <header class="page__header">
+      <h1>Create a New Request</h1>
+      <p class="page__sub">Fill out the details for your request.</p>
+    </header>
+
+    <%= form_with(model: @request, class: "form-card") do |form| %>
+      <%= form.hidden_field :item_id, value: params[:item_id] %>
+      
+      <% if @request.errors.any? %>
+        <div class="form-errors">
+          <h4><%= pluralize(@request.errors.count, "error") %> prohibited this request from being saved:</h4>
+          <ul>
+            <% @request.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= form.label :message %>
+        <%= form.text_area :message, required: true, rows: 5 %>
+      </div>
+
+      <div class="form-actions">
+        <%= form.submit "Create Request", class: "btn btn--primary" %>
+        <%= link_to "Cancel", requests_path, class: "btn btn--secondary" %>
+      </div>
+    <% end %>
+    
+  </div>
+</main>
