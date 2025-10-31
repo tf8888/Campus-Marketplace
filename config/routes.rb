@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     patch :send_verification_code
     post :check_verification_code
   end
-  
+
   resources :users, only: [ :show ] do
   end
 end

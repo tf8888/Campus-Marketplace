@@ -1,4 +1,4 @@
-require 'twilio-ruby'
+require "twilio-ruby"
 
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
@@ -18,25 +18,25 @@ class ProfilesController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-  
+
   def send_verification_code
     if @user.contact_number.blank?
       return redirect_to edit_profile_path, alert: "Please add a contact number to your profile first."
     end
-    
+
     begin
       client = Twilio::REST::Client.new(
         Rails.application.credentials.twilio[:account_sid],
         Rails.application.credentials.twilio[:auth_token]
       )
-      
+
       service_sid = Rails.application.credentials.twilio[:verify_service_sid]
-      
-      formatted_number = "+1" + @user.contact_number.gsub(/\D/, '')
+
+      formatted_number = "+1" + @user.contact_number.gsub(/\D/, "")
 
       client.verify.v2.services(service_sid)
                        .verifications
-                       .create(to: formatted_number, channel: 'sms')
+                       .create(to: formatted_number, channel: "sms")
 
       session[:verification_phone] = formatted_number
       redirect_to edit_profile_path, notice: "A verification code has been sent to your phone."
@@ -49,7 +49,7 @@ class ProfilesController < ApplicationController
   def check_verification_code
     code = params[:code]
     phone_number = session[:verification_phone]
-    
+
     if code.blank?
       return redirect_to edit_profile_path, alert: "Please enter your verification code."
     end
@@ -61,12 +61,12 @@ class ProfilesController < ApplicationController
       )
 
       service_sid = Rails.application.credentials.twilio[:verify_service_sid]
-      
+
       check = client.verify.v2.services(service_sid)
                              .verification_checks
                              .create(to: phone_number, code: code)
 
-      if check.status == 'approved'
+      if check.status == "approved"
         @user.update(verified: true)
         session.delete(:verification_phone)
         redirect_to edit_profile_path, notice: "Your phone number has been successfully verified!"
@@ -78,7 +78,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def set_user
     @user = current_user
@@ -88,5 +88,4 @@ class ProfilesController < ApplicationController
   def profile_params
     params.require(:user).permit(:name, :address, :contact_number)
   end
-  
 end
