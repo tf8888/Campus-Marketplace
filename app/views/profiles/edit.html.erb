@@ -1,4 +1,11 @@
 <% content_for :title, "My Profile · Campus Exchange" %>
+
+<style>
+  .form-group .button_to {
+    display: inline-block;
+  }
+</style>
+
 <main class="page" role="main">
   <div class="page__container" style="max-width: 768px;">
 
@@ -6,6 +13,45 @@
       <h1>My Profile</h1>
     </header>
 
+    <% if session[:verification_phone].present? %>
+      <div class="profile-edit-card" style="background-color: #eef; margin-bottom: 2rem; border-color: #bbd;">
+        <h3 style="margin-top: 0;">Check your phone</h3>
+        <p>We sent a verification code to <strong><%= session[:verification_phone] %></strong>. Please enter it below.</p>
+        
+        <%= form_with(url: check_verification_code_profile_path, method: :post, local: true) do |f| %>
+          <div class="form-group">
+            <%= f.label :code, "Verification Code", style: "font-weight: 600;" %>
+            <%= f.text_field :code, class: "form-control", required: true, maxlength: 6 %>
+          </div>
+          <%= f.submit "Submit Code", class: "btn btn--primary" %>
+        <% end %>
+      </div>
+    <% end %>
+    
+    <%# This section is now its own card and does not require JavaScript %>
+    <% if !@user.verified? && session[:verification_phone].blank? %>
+      <div class="profile-edit-card" style="margin-bottom: 2rem;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label>Verification Status</label>
+          <div style="display: flex; align-items: center; gap: 1rem; justify-content: space-between;">
+            
+            <span class="badge badge-not-verified">
+              Not Verified
+            </span>
+            
+            <% if @user.contact_number.present? %>
+              <%= button_to "Verify Now", 
+                    send_verification_code_profile_path,
+                    method: :patch,
+                    class: "btn btn--secondary" %>
+            <% else %>
+              <small>Please add a contact number below to verify.</small>
+            <% end %>
+            
+          </div>
+        </div>
+      </div>
+    <% end %>
     <div class="profile-edit-card">
       
       <%= form_with(model: @user, url: profile_path, method: :patch) do |f| %>
@@ -17,21 +63,15 @@
           <small>Your email is managed via Google OAuth and cannot be changed here.</small>
         </div>
 
-
+        <%# Only show this if the user IS verified %>
+        <% if @user.verified? %>
         <div class="form-group">
           <label>Verification Status</label>
-          <div>
-            <% if @user.verified? %>
-              <span class="badge badge-verified">
-                ✔ Verified
-              </span>
-            <% else %>
-              <span class="badge badge-not-verified">
-                Not Verified
-              </span>
-            <% end %>
-          </div>
+          <span class="badge badge-verified">
+            ✔ Verified
+          </span>
         </div>
+        <% end %>
 
         <hr style="margin: 2rem 0;">
         
