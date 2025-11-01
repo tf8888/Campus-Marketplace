@@ -17,6 +17,7 @@ production:
   # Rails and gems that call `connects_to` (solid_queue, Action Cable, etc.)
   # can resolve symbols like `queue`, `cable`, and `cache` in production.
   primary:
+    &primary
     <<: *default
     adapter: postgresql
     encoding: unicode
