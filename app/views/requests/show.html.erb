@@ -13,6 +13,12 @@
     <div class="request-show-actions">
       <%= link_to "Back to requests", requests_user_path(current_user), class: "btn btn--secondary" %>
       <%= button_to "Destroy this request", @request, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn--danger" %>
+      
+      <% if @request.user == current_user && @request.status == 'approved' && @request.rating.nil? %>
+        <%= link_to 'Leave a Rating', new_request_rating_path(@request), class: 'btn btn--primary' %>
+      <% elsif @request.rating.present? %>
+        <span class="badge badge-verified">You rated this: <%= @request.rating.score %>/10</span>
+      <% end %>
     </div>
 
     <div class="request-show-content">
