@@ -13,23 +13,21 @@ test:
   <<: *default
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV['DATABASE_URL'] %>
-
+  # Use Heroku's DATABASE_URL for all roles. Define role-based configs so
+  # Rails and gems that call `connects_to` (solid_queue, Action Cable, etc.)
+  # can resolve symbols like `queue`, `cable`, and `cache` in production.
   primary:
+    <<: *default
     adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     url: <%= ENV['DATABASE_URL'] %>
 
   cable:
-    adapter: postgresql
-    url: <%= ENV['DATABASE_URL'] %>
+    <<: *primary
 
   queue:
-    adapter: postgresql
-    url: <%= ENV['DATABASE_URL'] %>
+    <<: *primary
 
   cache:
-    adapter: postgresql
-    url: <%= ENV['DATABASE_URL'] %>
+    <<: *primary
