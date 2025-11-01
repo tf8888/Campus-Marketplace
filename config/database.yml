@@ -66,21 +66,5 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  adapter: postgresql
-  primary: &primary_production
-    <<: *default
-    database: storage/production.sqlite3
-    username: csce606_group5_project2
-    password: <%= ENV["CSCE606_GROUP5_PROJECT2_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: storage/production_cache.sqlite3
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: storage/production_queue.sqlite3
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: storage/production_cable.sqlite3
-    migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
