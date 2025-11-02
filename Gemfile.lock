@@ -167,6 +167,7 @@ GEM
     ffi (1.17.2-aarch64-linux-musl)
     ffi (1.17.2-arm-linux-gnu)
     ffi (1.17.2-arm-linux-musl)
+    ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
     ffi (1.17.2-x86_64-linux-musl)
@@ -182,6 +183,9 @@ GEM
       bigdecimal
       rake (>= 13)
     google-protobuf (4.33.0-aarch64-linux-musl)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.33.0-arm64-darwin)
       bigdecimal
       rake (>= 13)
     google-protobuf (4.33.0-x86_64-darwin)
@@ -268,6 +272,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.10-arm-linux-musl)
       racc (~> 1.4)
+    nokogiri (1.18.10-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.18.10-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.18.10-x86_64-linux-gnu)
@@ -303,6 +309,7 @@ GEM
     pg (1.6.2)
     pg (1.6.2-aarch64-linux)
     pg (1.6.2-aarch64-linux-musl)
+    pg (1.6.2-arm64-darwin)
     pg (1.6.2-x86_64-darwin)
     pg (1.6.2-x86_64-linux)
     pg (1.6.2-x86_64-linux-musl)
@@ -433,6 +440,8 @@ GEM
       google-protobuf (~> 4.31)
     sass-embedded (1.93.2-arm-linux-musleabihf)
       google-protobuf (~> 4.31)
+    sass-embedded (1.93.2-arm64-darwin)
+      google-protobuf (~> 4.31)
     sass-embedded (1.93.2-x86_64-darwin)
       google-protobuf (~> 4.31)
     sass-embedded (1.93.2-x86_64-linux-gnu)
@@ -477,6 +486,7 @@ GEM
     sqlite3 (2.7.4-aarch64-linux-musl)
     sqlite3 (2.7.4-arm-linux-gnu)
     sqlite3 (2.7.4-arm-linux-musl)
+    sqlite3 (2.7.4-arm64-darwin)
     sqlite3 (2.7.4-x86_64-darwin)
     sqlite3 (2.7.4-x86_64-linux-gnu)
     sqlite3 (2.7.4-x86_64-linux-musl)
@@ -496,6 +506,7 @@ GEM
     thor (1.4.0)
     thruster (0.1.15)
     thruster (0.1.15-aarch64-linux)
+    thruster (0.1.15-arm64-darwin)
     thruster (0.1.15-x86_64-darwin)
     thruster (0.1.15-x86_64-linux)
     timeout (0.4.3)
@@ -503,6 +514,10 @@ GEM
     turbo-rails (2.0.17)
       actionpack (>= 7.1.0)
       railties (>= 7.1.0)
+    twilio-ruby (7.8.5)
+      faraday (>= 0.9, < 3.0)
+      jwt (>= 1.5, < 4.0)
+      nokogiri (>= 1.6, < 2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.2.0)
@@ -537,6 +552,7 @@ PLATFORMS
   arm-linux-gnueabihf
   arm-linux-musl
   arm-linux-musleabihf
+  arm64-darwin-25
   x86_64-darwin-23
   x86_64-linux
   x86_64-linux-gnu
@@ -574,6 +590,7 @@ DEPENDENCIES
   stimulus-rails
   thruster
   turbo-rails
+  twilio-ruby
   tzinfo-data
   web-console
   webmock
