@@ -3,11 +3,11 @@ require "fileutils"
 
 # Service object to handle image uploads for Items.
 # - In production (when CLOUDINARY_URL present), uploads to Cloudinary and returns the secure URL.
-# - In development/test, stores the file under public/uploads and returns a relative URL like /uploads/...  
+# - In development/test, stores the file under public/uploads and returns a relative URL like /uploads/...
 # The controller should pass an ActionDispatch::Http::UploadedFile (params[:item][:image_file]).
 
 class ImageUploader
-  ALLOWED_CONTENT_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"].freeze
+  ALLOWED_CONTENT_TYPES = [ "image/jpeg", "image/png", "image/gif", "image/webp" ].freeze
   MAX_BYTES = 10 * 1024 * 1024 # 10MB safety cap
 
   class UploadError < StandardError; end
