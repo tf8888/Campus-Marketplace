@@ -14,6 +14,9 @@ class Request < ApplicationRecord
   private
 
   def user_cannot_request_own_item
-    errors.add(:user_id, "cannot request their own item") if Item.find(item_id).user_id == user_id
+    return unless item_id.present? && user_id.present?
+    item = Item.find_by(id: item_id)
+    return unless item
+    errors.add(:user_id, "cannot request their own item") if item.user_id == user_id
   end
 end

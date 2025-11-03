@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   # post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy"
 
-  post "message/create", to: "message#create"
+  # Messages are nested under requests; remove legacy singular route
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   resources :items do
     member do
       patch :mark_unavailable
+    end
+    collection do
+      get :my_listings
     end
   end
 

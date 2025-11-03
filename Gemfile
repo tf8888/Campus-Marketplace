@@ -55,6 +55,8 @@ group :development, :test do
 
   gem "rspec-rails"
 
+  gem "rails-controller-testing"
+
   # BDD (Behavior-Driven Development)
   gem "cucumber-rails", require: false
 
@@ -93,3 +95,6 @@ group :production do
   # Use postgresql as the database for Active Record
   gem "pg", "~> 1.1"
 end
+
+# Cloudinary for image uploads (used in production; safe to require everywhere)
+gem "cloudinary"

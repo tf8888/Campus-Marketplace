@@ -48,20 +48,7 @@
         <div class="items-container">
           <% @items.each do |item| %>
             <%= link_to item_path(item), class: "item-card-link" do %>
-              <div class="item-card">
-                <div class="item-card-content">
-                  <h3 class="item-card-title"><%= item.title %></h3>
-                  <p class="item-card-description"><%= truncate(item.description, length: 100) %></p>
-                  <div class="item-card-footer">
-                    <span class="item-card-condition"><strong>Condition:</strong> <%= item.condition %></span>
-                    <% if item.for_sale? %>
-                      <span class="item-card-tag sale">For Sale</span>
-                    <% else %>
-                      <span class="item-card-tag lend">For Lend</span>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
+              <%= render "shared/item_card", item: item %>
             <% end %>
           <% end %>
         </div>

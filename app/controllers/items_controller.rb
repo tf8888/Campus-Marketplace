@@ -4,22 +4,31 @@ class ItemsController < ApplicationController
   before_action :authorize_user!, only: [ :edit, :update, :destroy, :mark_unavailable ]
 
   def index
-    sort_by = params[:sort_by] || "title"
-    order = params[:order] || "asc"
+    if params[:query].present? || params[:category_id].present?
+      sort_by = params[:sort_by] || "title"
+      order = params[:order] || "asc"
 
-    @items = Item.where(available: true)
-                 .order("#{sort_by} #{order}")
+      @items = Item.where(available: true)
+                   .order("#{sort_by} #{order}")
 
-    if params[:query].present?
-      @items = @items.where("LOWER(title) LIKE LOWER(?) OR LOWER(description) LIKE LOWER(?)",
-                          "%#{params[:query]}%",
-                          "%#{params[:query]}%")
-    end
-    if params[:category_id].present?
-      @items = @items.where(category_id: params[:category_id])
+      if params[:query].present?
+        @items = @items.where("LOWER(title) LIKE LOWER(?) OR LOWER(description) LIKE LOWER(?)",
+                            "%#{params[:query]}%",
+                            "%#{params[:query]}%")
+      end
+      if params[:category_id].present?
+        @items = @items.where(category_id: params[:category_id])
+      end
+    else
+      @items = Item.none
     end
 
     @search_query = params[:query]
+  end
+
+  # Show the current user's listings
+  def my_listings
+    @my_items = current_user ? current_user.items.order(created_at: :desc) : Item.none
   end
 
   def show
@@ -36,6 +45,17 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.user = current_user
 
+    # Handle image file upload if provided
+    uploaded = params.dig(:item, :image_file)
+    if uploaded.present?
+      begin
+        @item.image_url = ImageUploader.upload(uploaded, folder: "items")
+      rescue ImageUploader::UploadError => e
+        @item.errors.add(:image_url, e.message)
+        return render :new, status: :unprocessable_entity
+      end
+    end
+
     if @item.save
       redirect_to @item, notice: "Item was successfully created."
     else
@@ -47,6 +67,24 @@ class ItemsController < ApplicationController
   end
 
   def update
+    # Process new file upload if present
+    uploaded = params.dig(:item, :image_file)
+    if uploaded.present?
+      begin
+        # Upload first and ensure the text field doesn't overwrite it
+        new_url = ImageUploader.upload(uploaded, folder: "items")
+        # Build attributes to update, excluding image_url from user params when file present
+        attrs = item_params.dup
+        attrs.delete(:image_url)
+        success = @item.update(attrs.merge(image_url: new_url))
+        return redirect_to(@item, notice: "Item was successfully updated.") if success
+        return render :edit, status: :unprocessable_entity
+      rescue ImageUploader::UploadError => e
+        @item.errors.add(:image_url, e.message)
+        return render :edit, status: :unprocessable_entity
+      end
+    end
+
     if @item.update(item_params)
       redirect_to @item, notice: "Item was successfully updated."
     else
@@ -71,6 +109,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
+    # image_file is handled separately and not persisted directly
     params.require(:item).permit(:title, :description, :condition, :available, :for_lend, :for_sale, :location, :image_url, :category_id)
   end
 

@@ -21,6 +21,28 @@ A lightweight web application for students to **lend, borrow, and coordinate ite
 - [Development](#development)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
+  
+## Image Uploads
+
+This app supports item image uploads:
+
+- Local (development/test): files are stored under `public/uploads/items/...` and the item stores a public path in `image_url`.
+- Production: images are uploaded to Cloudinary; the `image_url` stores the Cloudinary secure URL.
+
+### Cloudinary setup (production)
+
+1. Create a Cloudinary account and a cloud name.
+2. Configure the environment variable `CLOUDINARY_URL` (12-factor style):
+
+```
+CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+```
+
+3. Ensure this variable is available in your production environment (e.g., server, CI/CD secrets).
+
+4. No other configuration is required; the app detects this in production and uploads via the Cloudinary API.
+
+In development/test, the app will not call Cloudinary and will store files locally.
 
 ## Features
 
@@ -32,7 +54,7 @@ A lightweight web application for students to **lend, borrow, and coordinate ite
 ## Tech Stack
 
 - **Backend**: Ruby on Rails 8.0+
-- **Database**: Sqlite
+- **Database**: Sqlite (development/test), PostgreSQL (production)
 - **Styling**: SCSS
 - **Testing**: RSpec, Cucumber, SimpleCov
 - **JavaScript**: Minimal 
@@ -99,6 +121,9 @@ Create a `.env` file in the root directory and add the following environment var
 # Google OAuth Configuration
 GOOGLE_CLIENT_ID=your_google_client_id_here
 GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+
+# Optional: only needed in production if using Cloudinary for image uploads
+# CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
 ```
 
 To obtain Google OAuth credentials:

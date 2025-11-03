@@ -37,3 +37,7 @@
 !/app/assets/builds/.keep
 
 /coverage/*
+
+# Ignore local uploaded files
+/public/uploads/*
+!/public/uploads/.keep

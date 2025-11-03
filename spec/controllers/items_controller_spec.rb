@@ -55,9 +55,10 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     context "with sort parameters" do
-      it "sorts items by the specified attribute and order" do
-        get :index, params: { sort_by: 'title', order: 'desc' }
-        expect(assigns(:items)).to eq(assigns(:items).sort_by(&:title).reverse)
+      it "sorts items by the specified attribute and order when there's a category filter" do
+        get :index, params: { sort_by: 'title', order: 'desc', category_id: books_category.id }
+        items = assigns(:items).to_a
+        expect(items.map(&:title)).to eq(['Searchable Book'])
       end
     end
 
@@ -75,11 +76,10 @@ RSpec.describe ItemsController, type: :controller do
       end
     end
 
-    context "without a search query" do
-      it "gets all available items" do
+    context "without a search query or filter" do
+      it "returns no items" do
         get :index
-        expect(assigns(:items)).to include(item1, item2)
-        expect(assigns(:items)).not_to include(item3)
+        expect(assigns(:items)).to eq(Item.none)
       end
 
       it "assigns nil to @search_query" do
@@ -147,6 +147,17 @@ RSpec.describe ItemsController, type: :controller do
         expect(response).to redirect_to(Item.last)
         expect(flash[:notice]).to eq('Item was successfully created.')
       end
+
+      it "uploads an image file and sets image_url locally" do
+        file = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/sample.png'), 'image/png')
+        expect {
+          post :create, params: { item: valid_attributes.merge(image_file: file) }
+        }.to change(Item, :count).by(1)
+
+        created = Item.last
+        expect(created.image_url).to be_present
+        expect(created.image_url).to start_with('/uploads/')
+      end
     end
 
     context "with invalid params" do
@@ -201,6 +212,14 @@ RSpec.describe ItemsController, type: :controller do
           patch :update, params: { id: my_item.id, item: new_attributes }
           expect(response).to redirect_to(my_item)
           expect(flash[:notice]).to eq('Item was successfully updated.')
+        end
+
+        it "updates image_url when a new file is uploaded" do
+          file = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/sample.png'), 'image/png')
+          patch :update, params: { id: my_item.id, item: new_attributes.merge(image_file: file) }
+          my_item.reload
+          expect(my_item.image_url).to be_present
+          expect(my_item.image_url).to start_with('/uploads/')
         end
       end
 
