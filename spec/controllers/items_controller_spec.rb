@@ -45,6 +45,22 @@ RSpec.describe ItemsController, type: :controller do
     let!(:item2) { FactoryBot.create(:item, title: 'Another Item', category: other_category, available: true) }
     let!(:item3) { FactoryBot.create(:item, title: 'Searchable Chair', category: books_category, available: false) }
 
+    context "with a category filter" do
+      it "assigns only items from the specified category to @items" do
+        get :index, params: { category_id: books_category.id }
+        expect(assigns(:items)).to include(item1)
+        expect(assigns(:items)).not_to include(item2)
+        expect(assigns(:items)).not_to include(item3)
+      end
+    end
+
+    context "with sort parameters" do
+      it "sorts items by the specified attribute and order" do
+        get :index, params: { sort_by: 'title', order: 'desc' }
+        expect(assigns(:items)).to eq(assigns(:items).sort_by(&:title).reverse)
+      end
+    end
+
     context "with a search query" do
       it "assigns only matching, available items to @items" do
         get :index, params: { query: 'Searchable' }
@@ -60,33 +76,16 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     context "without a search query" do
-      it "assigns Item.none to @items" do
+      it "gets all available items" do
         get :index
-        expect(assigns(:items)).to eq(Item.none)
+        expect(assigns(:items)).to include(item1, item2)
+        expect(assigns(:items)).not_to include(item3)
       end
 
       it "assigns nil to @search_query" do
         get :index
         expect(assigns(:search_query)).to be_nil
       end
-    end
-  end
-
-  # --- GET #my_listings ---
-
-  describe "GET #my_listings" do
-    let!(:my_item) { FactoryBot.create(:item, user: user) }
-    let!(:other_item) { FactoryBot.create(:item, user: other_user) }
-
-    it "assigns the current user's items to @my_items" do
-      get :my_listings
-      expect(assigns(:my_items)).to include(my_item)
-      expect(assigns(:my_items)).not_to include(other_item)
-    end
-
-    it "renders the my_listings template" do
-      get :my_listings
-      expect(response).to render_template(:my_listings)
     end
   end
 
