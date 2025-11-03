@@ -7,7 +7,13 @@
 
     <header class="page__header">
       <h1>Request for <%= link_to @request.item.title, item_path(@request.item) %></h1>
-      <p>Conversation between you and <%= link_to @request.item.user.name, user_path(@request.item.user) %></p>
+      <p>Conversation between you and 
+        <% if @request.item.user == current_user %>
+          <%= link_to @request.user.name, user_path(@request.user) %>
+        <% else %>
+          <%= link_to @request.item.user.name, user_path(@request.item.user) %>
+        <% end %>
+      </p>
     </header>
 
     <div class="request-show-actions">
@@ -24,10 +30,7 @@
     <div class="request-show-content">
       <%# Messaging Conversation Section %>
       <div id="messages" class="messages-conversation">
-        <div class="message message--sent">
-          <p class="message__content"><%= @request.message %></p>
-          <span class="message__timestamp"><%= @request.created_at.strftime("%b %d, %Y %I:%M %p") %></span>
-        </div>
+        <%= render partial: "messages/message", locals: { message: Message.build(content: @request.message, created_at: @request.created_at, sender: @request.user) } %>
         <% @messages.each do |message| %>
           <%= render partial: "messages/message", locals: { message: message } %>
         <% end %>
