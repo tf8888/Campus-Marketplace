@@ -4,8 +4,8 @@ class ItemsController < ApplicationController
   before_action :authorize_user!, only: [ :edit, :update, :destroy, :mark_unavailable ]
 
   def index
-    sort_by = params[:sort_by] || 'title'
-    order = params[:order] || 'asc'
+    sort_by = params[:sort_by] || "title"
+    order = params[:order] || "asc"
 
     @items = Item.where(available: true)
                  .order("#{sort_by} #{order}")
