@@ -4,14 +4,19 @@ class ItemsController < ApplicationController
   before_action :authorize_user!, only: [ :edit, :update, :destroy, :mark_unavailable ]
 
   def index
+    sort_by = params[:sort_by] || 'title'
+    order = params[:order] || 'asc'
+
+    @items = Item.where(available: true)
+                 .order("#{sort_by} #{order}")
+
     if params[:query].present?
-      @items = Item.where(available: true)
-                  .where("LOWER(title) LIKE LOWER(?) OR LOWER(description) LIKE LOWER(?)",
+      @items = @items.where("LOWER(title) LIKE LOWER(?) OR LOWER(description) LIKE LOWER(?)",
                           "%#{params[:query]}%",
                           "%#{params[:query]}%")
-                  .order(created_at: :desc)
-    else
-      @items = Item.none
+    end
+    if params[:category_id].present?
+      @items = @items.where(category_id: params[:category_id])
     end
 
     @search_query = params[:query]
