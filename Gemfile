@@ -95,3 +95,6 @@ group :production do
   # Use postgresql as the database for Active Record
   gem "pg", "~> 1.1"
 end
+
+# Cloudinary for image uploads (used in production; safe to require everywhere)
+gem "cloudinary"

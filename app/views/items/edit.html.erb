@@ -14,7 +14,7 @@
         automatically send this form to the UPDATE action (PATCH)
         instead of the CREATE action (POST).
     %>
-    <%= form_with(model: @item, class: "form-card") do |form| %>
+  <%= form_with(model: @item, class: "form-card", html: { multipart: true }) do |form| %>
       
       <%# This error block is the same %>
       <% if @item.errors.any? %>
@@ -67,7 +67,13 @@
       </div>
       
       <div class="form-group">
-        <%= form.label :image_url, "Image URL (Optional)" %>
+        <%= form.label :image_file, "Upload Image (Optional)" %>
+        <%= form.file_field :image_file, accept: "image/*" %>
+        <p class="help-text">JPEG, PNG, GIF, WEBP. Max 10MB.</p>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :image_url, "Or paste an Image URL (Optional)" %>
         <%= form.text_field :image_url, placeholder: "https://example.com/image.png" %>
       </div>
 

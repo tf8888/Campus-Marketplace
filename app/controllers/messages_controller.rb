@@ -16,12 +16,14 @@ class MessagesController < ApplicationController
         format.turbo_stream
         format.json { render json: { message: "Message sent successfully" }, status: :ok }
         format.html { redirect_to request_path(@request), notice: "Message sent successfully." }
+        format.json { render json: { message: "Message sent successfully" }, status: :ok }
       end
     else
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace("new_message_form", partial: "messages/form", locals: { request: @request, message: @message }) }
         format.json { render json: { error: @message.errors.full_messages }, status: :unprocessable_entity }
         format.html { redirect_to request_path(@request), alert: "Failed to send message." }
+        format.json { render json: { error: @message.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
@@ -29,7 +31,8 @@ class MessagesController < ApplicationController
   private
 
   def set_request
-    @request = Request.find(params[:request_id])
+    req_id = params[:request_id] || params.dig(:message, :request_id)
+    @request = Request.find(req_id)
   end
 
   def message_params

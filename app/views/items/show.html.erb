@@ -16,6 +16,11 @@
     </header>
 
     <div class="item-show-content">
+      <% if @item.image_url.present? %>
+        <div class="item-show-image">
+          <%= image_tag @item.image_url, alt: @item.title %>
+        </div>
+      <% end %>
       <div class="item-show-details">
         <%# Description Section %>
         <% if @item.description.present? %>

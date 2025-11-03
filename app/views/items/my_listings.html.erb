@@ -1,0 +1,26 @@
+<% content_for :title, "My Listings · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container">
+    <header class="page__header">
+      <h1>My Listings</h1>
+      <p class="page__sub">Items you've posted.</p>
+    </header>
+
+    <section class="page__content">
+      <% if @my_items.any? %>
+        <div class="items-container">
+          <% @my_items.each do |item| %>
+            <%= link_to item_path(item), class: "item-card-link" do %>
+              <%= render "shared/item_card", item: item %>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="card empty">
+          <p>You haven't posted any items yet.</p>
+        </div>
+      <% end %>
+    </section>
+  </div>
+  </main>
