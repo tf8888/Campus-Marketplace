@@ -14,11 +14,13 @@ class MessagesController < ApplicationController
     if @message.save
       respond_to do |format|
         format.turbo_stream
+        format.json { render json: { message: "Message sent successfully" }, status: :ok }
         format.html { redirect_to request_path(@request), notice: "Message sent successfully." }
       end
     else
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace("new_message_form", partial: "messages/form", locals: { request: @request, message: @message }) }
+        format.json { render json: { error: @message.errors.full_messages }, status: :unprocessable_entity }
         format.html { redirect_to request_path(@request), alert: "Failed to send message." }
       end
     end
