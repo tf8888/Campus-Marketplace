@@ -50,7 +50,7 @@ RSpec.describe Category, type: :model do
         available: true,
         condition: "New"
       )
-      
+
       expect { category.destroy }.to change { Item.count }.by(-1)
     end
   end

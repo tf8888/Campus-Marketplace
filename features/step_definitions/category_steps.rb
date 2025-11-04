@@ -1,7 +1,7 @@
 # Category step definitions
 
 Then('I should see {string} in the category options') do |category_name|
-  expect(page).to have_select('item[category_id]', with_options: [category_name])
+  expect(page).to have_select('item[category_id]', with_options: [ category_name ])
 end
 
 When('I try to create a duplicate category {string}') do |category_name|

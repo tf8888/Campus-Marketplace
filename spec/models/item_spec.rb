@@ -175,7 +175,7 @@ RSpec.describe Item, type: :model do
       )
       requester = User.create!(name: "Requester", email: "requester@example.com", role: "member", verified: true)
       Request.create!(item: item, user: requester, status: "pending", message: "I want this")
-      
+
       expect { item.destroy }.to change { Request.count }.by(-1)
     end
   end

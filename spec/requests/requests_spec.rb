@@ -112,7 +112,7 @@ RSpec.describe "/requests", type: :request do
       request = Request.create! valid_attributes
       other_user = User.create!(email: "other@example.com", name: "Other", role: "member", verified: true)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(other_user)
-      
+
       expect {
         delete request_url(request)
       }.to change(Request, :count).by(0)
@@ -124,7 +124,7 @@ RSpec.describe "/requests", type: :request do
     it "approves a pending request" do
       request = Request.create! valid_attributes
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user2)
-      
+
       patch approve_request_path(request)
       request.reload
       expect(request.status).to eq("approved")
@@ -145,7 +145,7 @@ RSpec.describe "/requests", type: :request do
     it "rejects a pending request" do
       request = Request.create! valid_attributes
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user2)
-      
+
       patch reject_request_path(request)
       request.reload
       expect(request.status).to eq("rejected")

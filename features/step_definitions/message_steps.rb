@@ -4,7 +4,7 @@ When('I try to create a message with sender and receiver {string} for request {s
   item = Item.find_by(title: item_title)
   request = Request.find_by(item: item)
   user = User.find_by(email: email)
-  
+
   @test_message = Message.new(
     request: request,
     sender: user,
@@ -19,7 +19,7 @@ When('I try to create a message without content for request {string}') do |item_
   request = Request.find_by(item: item)
   buyer = User.find_by(email: "buyer@example.com")
   owner = User.find_by(email: "owner@example.com")
-  
+
   @test_message = Message.new(
     request: request,
     sender: buyer,
@@ -34,7 +34,7 @@ When('I try to create a message with {int} characters for request {string}') do 
   request = Request.find_by(item: item)
   buyer = User.find_by(email: "buyer@example.com")
   owner = User.find_by(email: "owner@example.com")
-  
+
   @test_message = Message.new(
     request: request,
     sender: buyer,

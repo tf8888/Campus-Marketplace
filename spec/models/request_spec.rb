@@ -108,14 +108,14 @@ RSpec.describe Request, type: :model do
     it 'destroys associated messages when request is destroyed' do
       request = Request.create!(item: item, user: requester, status: "pending", message: "I want this")
       Message.create!(request: request, sender: requester, receiver: owner, content: "Hello")
-      
+
       expect { request.destroy }.to change { Message.count }.by(-1)
     end
 
     it 'destroys associated rating when request is destroyed' do
       request = Request.create!(item: item, user: requester, status: "approved", message: "I want this")
       Rating.create!(rater: requester, ratee: owner, request: request, score: 9)
-      
+
       expect { request.destroy }.to change { Rating.count }.by(-1)
     end
   end
