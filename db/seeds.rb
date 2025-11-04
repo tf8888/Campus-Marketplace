@@ -24,37 +24,16 @@ furniture = Category.find_or_create_by!(name: "Furniture")
 # --- 2. Create Items ---
 puts "Creating items..."
 
-# Helper method to copy seed images to public/uploads/items/
-def seed_image_path(filename)
-  # Try multiple extensions
-  base_name = File.basename(filename, File.extname(filename))
-  extensions = [ '.jpg', '.jpeg', '.png', '.gif', '.webp' ]
-
-  source = nil
-  extensions.each do |ext|
-    potential_path = Rails.root.join('db', 'seed_images', "#{base_name}#{ext}")
-    if File.exist?(potential_path)
-      source = potential_path
-      break
-    end
-  end
-
-  return nil unless source
-
-  # Create uploads directory if it doesn't exist
-  dest_dir = Rails.root.join('public', 'uploads', 'items')
-  FileUtils.mkdir_p(dest_dir)
-
-  # Generate a unique filename to avoid conflicts
-  ext = File.extname(source)
-  dest_filename = "seed_#{base_name}_#{SecureRandom.hex(8)}#{ext}"
-  dest_path = dest_dir.join(dest_filename)
-
-  # Copy the file
-  FileUtils.cp(source, dest_path)
-
-  # Return the URL path
-  "/uploads/items/#{dest_filename}"
+# Helper method to return placeholder image URLs that work in production
+def seed_image_url(type)
+  # Use placeholder images from a CDN that works everywhere
+  placeholders = {
+    'laptop' => 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&h=600&fit=crop',
+    'book' => 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=800&h=600&fit=crop',
+    'chair' => 'https://images.unsplash.com/photo-1503602642458-232111445657?w=800&h=600&fit=crop',
+    'monitor' => 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&h=600&fit=crop'
+  }
+  placeholders[type] || 'https://via.placeholder.com/800x600.png?text=Item+Image'
 end
 
 item1 = Item.find_or_create_by!(title: "Used Laptop - 15 inch", user: user1) do |item|
@@ -66,10 +45,10 @@ item1 = Item.find_or_create_by!(title: "Used Laptop - 15 inch", user: user1) do 
   item.price = 450.00
   item.location = "Downtown Library"
   item.category = electronics
+  item.image_url = seed_image_url('laptop')
 end
 # Update price if item already exists
 item1.update!(price: 450.00) if item1.for_sale && item1.price.nil?
-item1.update!(image_url: seed_image_path("laptop.jpg") || item1.image_url || "https://example.com/images/laptop.png")
 
 item2 = Item.find_or_create_by!(title: "Intro to Algorithms Textbook", user: user2) do |item|
   item.description = "Slightly used textbook for CS 301. No markings inside."
@@ -80,9 +59,9 @@ item2 = Item.find_or_create_by!(title: "Intro to Algorithms Textbook", user: use
   item.price = nil
   item.location = "Campus Bookstore"
   item.category = books
+  item.image_url = seed_image_url('book')
 end
 item2.update!(price: 30.00) if item2.price.nil?
-item2.update!(image_url: seed_image_path("book.jpg") || item2.image_url || "https://example.com/images/book.png")
 
 item3 = Item.find_or_create_by!(title: "Wooden Desk Chair", user: user2) do |item|
   item.description = "Simple wooden chair, perfect for a desk. Has some minor scuffs."
@@ -93,10 +72,10 @@ item3 = Item.find_or_create_by!(title: "Wooden Desk Chair", user: user2) do |ite
   item.price = 35.50
   item.location = "123 Main St"
   item.category = furniture
+  item.image_url = seed_image_url('chair')
 end
 # Update price if item already exists
 item3.update!(price: 35.50) if item3.for_sale && item3.price.nil?
-item3.update!(image_url: seed_image_path("chair.jpg") || item3.image_url || "https://example.com/images/chair.png")
 
 item4 = Item.find_or_create_by!(title: "High-Quality USB-C Monitor", user: user1) do |item|
   item.description = "27-inch 4K monitor. Great colors. Only available to lend, not for sale."
@@ -107,9 +86,9 @@ item4 = Item.find_or_create_by!(title: "High-Quality USB-C Monitor", user: user1
   item.price = nil
   item.location = "Co-working Space"
   item.category = electronics
+  item.image_url = seed_image_url('monitor')
 end
 item4.update!(price: 100.00) if item4.price.nil?
-item4.update!(image_url: seed_image_path("monitor.jpg") || item4.image_url || "https://example.com/images/monitor.png")
 
 # --- 3. (New Section) Create Approved Requests and Ratings ---
 puts "Creating completed requests and ratings..."
