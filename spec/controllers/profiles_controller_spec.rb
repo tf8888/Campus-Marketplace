@@ -13,8 +13,6 @@ fake_credentials = double("Credentials", twilio: {
   verify_service_sid: "test_service_sid"
 })
 allow(Rails.application).to receive(:credentials).and_return(fake_credentials)
-
-
 end
 
 describe "GET #show" do
@@ -170,6 +168,5 @@ user.update(contact_number: "(123) 456-7890")
   patch :send_verification_code
   expect(session[:verification_phone]).to eq("+11234567890")
 end
-
 end
 end

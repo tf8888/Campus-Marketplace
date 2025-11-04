@@ -109,5 +109,4 @@ RSpec.describe RequestsController, type: :controller do
       end
     end
   end
-
 end

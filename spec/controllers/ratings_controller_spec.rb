@@ -15,14 +15,12 @@ allow(controller).to receive(:current_user).and_return(request_user)
 @routes = ActionDispatch::Routing::RouteSet.new
 @routes.draw do
   resources :requests do
-    resource :rating, only: [:new, :create]
+    resource :rating, only: [ :new, :create ]
   end
   root to: "home#index"
   get "/login", to: "sessions#new"
 end
 controller.instance_variable_set(:@_routes, @routes)
-
-
 end
 
 describe "GET #new" do
@@ -68,8 +66,6 @@ context "when user is not signed in" do
     expect(flash[:alert]).to eq("You must sign in first.")
   end
 end
-
-
 end
 
 describe "POST #create" do
