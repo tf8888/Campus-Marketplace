@@ -3,7 +3,10 @@ class RequestsController < ApplicationController
 
   # GET /requests/1 or /requests/1.json
   def show
-    redirect_back fallback_location: root_path, alert: "Access denied." unless @request.user == current_user || @request.item.user == current_user
+    unless @request.user == current_user || @request.item.user == current_user
+      redirect_back fallback_location: root_path, alert: "Access denied."
+      return
+    end
     @messages = @request.messages.order(created_at: :asc)
   end
 
@@ -15,7 +18,10 @@ class RequestsController < ApplicationController
   # POST /requests or /requests.json
   def create
     @request = Request.new(user: current_user, status: :pending, **request_params)
-    redirect_back fallback_location: root_path, alert: "Access denied." unless @request.user == current_user
+    unless @request.user == current_user
+      redirect_back fallback_location: root_path, alert: "Access denied."
+      return
+    end
 
     respond_to do |format|
       if @request.save
@@ -30,7 +36,11 @@ class RequestsController < ApplicationController
 
   # DELETE /requests/1 or /requests/1.json
   def destroy
-    redirect_back fallback_location: root_path, alert: "Access denied." unless @request.user == current_user
+    unless @request.user == current_user
+      redirect_back fallback_location: root_path, alert: "Access denied."
+      return
+    end
+
     @request.destroy!
 
     respond_to do |format|
