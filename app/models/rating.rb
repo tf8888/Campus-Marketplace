@@ -21,7 +21,6 @@ class Rating < ApplicationRecord
   end
 
   def request_must_be_approved
-    # 确保请求状态是 'approved'
     errors.add(:request, "must be approved before rating") unless request.status == "approved"
   end
 end
