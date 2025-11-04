@@ -28,8 +28,8 @@ puts "Creating items..."
 def seed_image_path(filename)
   # Try multiple extensions
   base_name = File.basename(filename, File.extname(filename))
-  extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
-  
+  extensions = [ '.jpg', '.jpeg', '.png', '.gif', '.webp' ]
+
   source = nil
   extensions.each do |ext|
     potential_path = Rails.root.join('db', 'seed_images', "#{base_name}#{ext}")
@@ -38,21 +38,21 @@ def seed_image_path(filename)
       break
     end
   end
-  
+
   return nil unless source
-  
+
   # Create uploads directory if it doesn't exist
   dest_dir = Rails.root.join('public', 'uploads', 'items')
   FileUtils.mkdir_p(dest_dir)
-  
+
   # Generate a unique filename to avoid conflicts
   ext = File.extname(source)
   dest_filename = "seed_#{base_name}_#{SecureRandom.hex(8)}#{ext}"
   dest_path = dest_dir.join(dest_filename)
-  
+
   # Copy the file
   FileUtils.cp(source, dest_path)
-  
+
   # Return the URL path
   "/uploads/items/#{dest_filename}"
 end

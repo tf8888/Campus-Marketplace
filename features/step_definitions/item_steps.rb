@@ -26,11 +26,11 @@ Given('the following items exist:') do |table|
 
     price_value = if item['price'].present?
                     item['price'].to_f
-                  elsif item['for_sale'] == 'true'
+    elsif item['for_sale'] == 'true'
                     10.0
-                  else
+    else
                     nil
-                  end
+    end
 
     Item.create!(
       title: item['title'],
