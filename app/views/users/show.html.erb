@@ -5,8 +5,14 @@
 
     <aside class="profile-sidebar" style="flex: 0 0 280px;">
       <header class="page__header" style="margin-bottom: 1.5rem;">
-        <h1><%= @user.name %></h1>
-        
+        <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+          <h1 style="margin:0;"><%= @user.name %></h1>
+
+          <% if current_user == @user %>
+            <%= link_to "View Requests", requests_user_path(@user), class: "btn btn--secondary" %>
+          <% end %>
+        </div>
+        <br>
         <div>
           <% if @user.verified? %>
             <span class="badge badge-verified">

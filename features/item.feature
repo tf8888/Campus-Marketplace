@@ -40,12 +40,12 @@ Feature: Item Management
     And I submit the item form
     Then I should see "Item must be either for sale or for lend, not both or neither"
 
-  Scenario: Empty search returns no items
+  Scenario: Empty search shows all available items
     Given the following items exist:
       | title     | description | available | user             | category    | for_sale |
       | iPhone 12 | Like new    | true      | john@example.com | Electronics | true     |
     When I visit the items page
-    Then I should not see "iPhone 12"
+    Then I should see this "iPhone 12"
 
   Scenario: Cannot edit someone else's item
     Given the following items exist:

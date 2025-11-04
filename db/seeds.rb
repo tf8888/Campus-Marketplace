@@ -63,9 +63,12 @@ item1 = Item.find_or_create_by!(title: "Used Laptop - 15 inch", user: user1) do 
   item.available = true
   item.for_lend = false
   item.for_sale = true
+  item.price = 450.00
   item.location = "Downtown Library"
   item.category = electronics
 end
+# Update price if item already exists
+item1.update!(price: 450.00) if item1.for_sale && item1.price.nil?
 item1.update!(image_url: seed_image_path("laptop.jpg") || item1.image_url || "https://example.com/images/laptop.png")
 
 item2 = Item.find_or_create_by!(title: "Intro to Algorithms Textbook", user: user2) do |item|
@@ -74,9 +77,11 @@ item2 = Item.find_or_create_by!(title: "Intro to Algorithms Textbook", user: use
   item.available = true
   item.for_lend = true
   item.for_sale = false
+  item.price = nil
   item.location = "Campus Bookstore"
   item.category = books
 end
+item2.update!(price: 30.00) if item2.price.nil?
 item2.update!(image_url: seed_image_path("book.jpg") || item2.image_url || "https://example.com/images/book.png")
 
 item3 = Item.find_or_create_by!(title: "Wooden Desk Chair", user: user2) do |item|
@@ -85,9 +90,12 @@ item3 = Item.find_or_create_by!(title: "Wooden Desk Chair", user: user2) do |ite
   item.available = true
   item.for_lend = false
   item.for_sale = true
+  item.price = 35.50
   item.location = "123 Main St"
   item.category = furniture
 end
+# Update price if item already exists
+item3.update!(price: 35.50) if item3.for_sale && item3.price.nil?
 item3.update!(image_url: seed_image_path("chair.jpg") || item3.image_url || "https://example.com/images/chair.png")
 
 item4 = Item.find_or_create_by!(title: "High-Quality USB-C Monitor", user: user1) do |item|
@@ -96,9 +104,11 @@ item4 = Item.find_or_create_by!(title: "High-Quality USB-C Monitor", user: user1
   item.available = true
   item.for_lend = true
   item.for_sale = false
+  item.price = nil
   item.location = "Co-working Space"
   item.category = electronics
 end
+item4.update!(price: 100.00) if item4.price.nil?
 item4.update!(image_url: seed_image_path("monitor.jpg") || item4.image_url || "https://example.com/images/monitor.png")
 
 # --- 3. (New Section) Create Approved Requests and Ratings ---

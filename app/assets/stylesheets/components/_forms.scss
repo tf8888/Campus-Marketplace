@@ -44,6 +44,10 @@
   
   input[type="text"],
   input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
   textarea,
   select {
     width: 100%;
@@ -53,10 +57,28 @@
     border: 1px solid #ccc;
     box-sizing: border-box; /* Important! */
   }
+
+  /* Make number inputs visually consistent across browsers */
+  input[type="number"] {
+    appearance: textfield; /* modern */
+    -moz-appearance: textfield; /* Firefox */
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Chrome/Safari */
+    margin: 0;
+  }
   
   textarea {
     resize: vertical;
   }
+}
+
+/* Optional helper text styling under inputs */
+.help-text {
+  margin-top: 6px;
+  color: #6b7280; /* gray-500 */
+  font-size: 0.875rem; /* 14px */
 }
 
 .checkbox-group {

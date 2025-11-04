@@ -27,6 +27,7 @@ RSpec.describe ItemsController, type: :controller do
       location: 'Here',
       for_sale: true,
       for_lend: false,
+      price: 19.99,
       category_id: category.id
     }
   }
@@ -77,9 +78,10 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     context "without a search query or filter" do
-      it "returns no items" do
+      it "returns all available items" do
         get :index
-        expect(assigns(:items)).to eq(Item.none)
+        expect(assigns(:items)).to include(item1, item2)
+        expect(assigns(:items)).not_to include(item3)
       end
 
       it "assigns nil to @search_query" do

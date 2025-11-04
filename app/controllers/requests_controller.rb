@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[ show destroy ]
+  before_action :set_request, only: %i[ show destroy approve reject ]
 
   # GET /requests/1 or /requests/1.json
   def show
@@ -36,6 +36,34 @@ class RequestsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to requests_user_path(current_user), notice: "Request was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
+    end
+  end
+
+  # PATCH /requests/:id/approve
+  def approve
+    unless @request.item.user == current_user
+      return redirect_back fallback_location: root_path, alert: "Access denied."
+    end
+
+    if @request.status == "pending"
+      @request.update!(status: "approved")
+      redirect_to request_path(@request), notice: "Request approved."
+    else
+      redirect_to request_path(@request), alert: "Only pending requests can be approved."
+    end
+  end
+
+  # PATCH /requests/:id/reject
+  def reject
+    unless @request.item.user == current_user
+      return redirect_back fallback_location: root_path, alert: "Access denied."
+    end
+
+    if @request.status == "pending"
+      @request.update!(status: "rejected")
+      redirect_to request_path(@request), notice: "Request rejected."
+    else
+      redirect_to request_path(@request), alert: "Only pending requests can be rejected."
     end
   end
 

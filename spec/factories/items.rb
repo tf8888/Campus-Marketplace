@@ -6,6 +6,7 @@ FactoryBot.define do
     available { true }
     for_lend { false }
     for_sale { true }
+    price { for_sale ? 9.99 : nil }
     location { "Sample Location" }
     image_url { "http://example.com/sample_image.jpg" }
     association :user
