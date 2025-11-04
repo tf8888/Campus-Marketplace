@@ -58,7 +58,7 @@ RSpec.describe ItemsController, type: :controller do
       it "sorts items by the specified attribute and order when there's a category filter" do
         get :index, params: { sort_by: 'title', order: 'desc', category_id: books_category.id }
         items = assigns(:items).to_a
-        expect(items.map(&:title)).to eq(['Searchable Book'])
+        expect(items.map(&:title)).to eq([ 'Searchable Book' ])
       end
     end
 
