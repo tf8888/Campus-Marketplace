@@ -1,0 +1,69 @@
+<% content_for :title, "Requests For My Items · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container">
+    <header class="page__header">
+      <div style="display:flex; align-items:center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <h1 style="margin:0;">Requests For My Items</h1>
+        <%= link_to "My Listings", items_user_path(current_user), class: "btn btn--primary" %>
+      </div>
+    </header>
+
+    <% if @incoming_requests.present? %>
+      <section class="page__content">
+        <div class="items-container-horizontal">
+          <% @incoming_requests.each do |request| %>
+            <div class="item-card item-card--horizontal">
+              <% if request.item.image_url.present? %>
+                <div class="item-card-thumb">
+                  <%= image_tag request.item.image_url, alt: request.item.title %>
+                </div>
+              <% end %>
+
+              <div class="item-card-content">
+                <div style="display:flex; align-items:center; gap: 10px; flex-wrap: wrap;">
+                  <h3 class="item-card-title" style="margin:0;">
+                    <%= link_to request.item.title, item_path(request.item) %>
+                  </h3>
+                  <% status_class = case request.status
+                    when 'approved' then 'status--approved'
+                    when 'pending' then 'status--pending'
+                    when 'rejected' then 'status--rejected'
+                    else 'status--other'
+                  end %>
+                  <span class="status-pill <%= status_class %>"><%= request.status.to_s.capitalize.presence || 'Pending' %></span>
+
+                  <span class="item-card-tag <%= request.item.for_sale? ? 'sale' : 'lend' %>"><%= request.item.for_sale? ? 'For Sale' : 'For Lend' %></span>
+
+                  <% if request.item.for_sale? && request.item.price.present? %>
+                    <span class="item-card-price item-card-price--emphasis"> <%= number_to_currency(request.item.price) %> </span>
+                  <% end %>
+                </div>
+
+                <p class="item-card-description" style="margin:.25rem 0 0;">
+                  <strong>Buyer:</strong> <%= link_to request.user.name, user_path(request.user) %>
+                  · <strong>Requested on:</strong> <%= l(request.created_at, format: :short) rescue request.created_at.strftime('%Y-%m-%d') %>
+                  <% if request.message.present? %>
+                    · <em>“<%= truncate(request.message, length: 80) %>”</em>
+                  <% end %>
+                </p>
+              </div>
+
+              <div class="item-card-actions">
+                <%= link_to "View", request_path(request), class: "btn btn--secondary" %>
+                <% if request.status == 'pending' %>
+                  <%= button_to 'Approve', approve_request_path(request), method: :patch, class: 'btn btn--primary' %>
+                  <%= button_to 'Reject', reject_request_path(request), method: :patch, class: 'btn btn--secondary', data: { turbo_confirm: 'Reject this request?' } %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% else %>
+      <div class="card empty">
+        <p>No one has requested your items yet.</p>
+      </div>
+    <% end %>
+  </div>
+</main>

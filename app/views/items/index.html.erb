@@ -3,8 +3,13 @@
 <main class="page" role="main">
   <div class="page__container">
     <header class="page__header">
-      <h1>Browse Items</h1>
-      <p class="page__sub">Find what you're looking for.</p>
+      <div style="display:flex; align-items:center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h1 style="margin:0;">Browse Items</h1>
+          <p class="page__sub" style="margin: 4px 0 0;">Find what you're looking for.</p>
+        </div>
+        <%= link_to "Add Listing", new_item_path, class: "btn btn--primary" %>
+      </div>
     </header>
 
     <%= form_with url: items_path, method: :get, class: "search-filter" do |form| %>
@@ -18,7 +23,7 @@
         <%# --- SORT BY DROPDOWN --- %>
         <div class="filter-item">
           <%= form.label :sort_by, "Sort by", class: "filter-label" %>
-          <%= form.select :sort_by, options_for_select([["Title", "title"], ["Condition", "condition"], ["Created At", "created_at"]], selected: params[:sort_by]), class: "filter-select" %>
+          <%= form.select :sort_by, options_for_select([["Title", "title"], ["Price", "price"], ["Condition", "condition"], ["Created At", "created_at"]], selected: params[:sort_by]), class: "filter-select" %>
         </div>
 
         <%# --- ORDER DROPDOWN --- %>
@@ -27,7 +32,7 @@
           <%= form.select :order, options_for_select([["Ascending", "asc"], ["Descending", "desc"]], selected: params[:order]), class: "filter-select" %>
         </div>
 
-        <%= form.submit "Apply", class: "filter-item btn btn--primary" %>
+        <%= form.submit "Apply Filters", class: "filter-item btn btn--primary" %>
       </div>
       <div class="filter-group">
         <div class="filter-item">

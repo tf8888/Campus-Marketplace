@@ -4,24 +4,27 @@ class ItemsController < ApplicationController
   before_action :authorize_user!, only: [ :edit, :update, :destroy, :mark_unavailable ]
 
   def index
-    if params[:query].present? || params[:category_id].present?
-      sort_by = params[:sort_by] || "title"
-      order = params[:order] || "asc"
+    # Whitelist sort options to prevent SQL injection and ensure valid columns
+    allowed_sort_columns = %w[title price condition created_at]
+    sort_by = allowed_sort_columns.include?(params[:sort_by]) ? params[:sort_by] : "title"
+    order = %w[asc desc].include?(params[:order]) ? params[:order] : "asc"
 
-      @items = Item.where(available: true)
-                   .order("#{sort_by} #{order}")
+    @items = Item.where(available: true)
 
-      if params[:query].present?
-        @items = @items.where("LOWER(title) LIKE LOWER(?) OR LOWER(description) LIKE LOWER(?)",
-                            "%#{params[:query]}%",
-                            "%#{params[:query]}%")
-      end
-      if params[:category_id].present?
-        @items = @items.where(category_id: params[:category_id])
-      end
-    else
-      @items = Item.none
+    if params[:query].present?
+      @items = @items.where(
+        "LOWER(title) LIKE LOWER(?) OR LOWER(description) LIKE LOWER(?)",
+        "%#{params[:query]}%",
+        "%#{params[:query]}%"
+      )
     end
+
+    if params[:category_id].present?
+      @items = @items.where(category_id: params[:category_id])
+    end
+
+    # Apply sorting last
+    @items = @items.order(sort_by => order.to_sym)
 
     @search_query = params[:query]
   end
@@ -110,7 +113,7 @@ class ItemsController < ApplicationController
 
   def item_params
     # image_file is handled separately and not persisted directly
-    params.require(:item).permit(:title, :description, :condition, :available, :for_lend, :for_sale, :location, :image_url, :category_id)
+    params.require(:item).permit(:title, :description, :condition, :available, :for_lend, :for_sale, :location, :image_url, :category_id, :price)
   end
 
   def authorize_user!

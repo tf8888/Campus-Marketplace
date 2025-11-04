@@ -24,6 +24,14 @@ Given('the following items exist:') do |table|
     user = User.find_by(email: item['user'])
     category = Category.find_by(name: item['category'])
 
+    price_value = if item['price'].present?
+                    item['price'].to_f
+    elsif item['for_sale'] == 'true'
+                    10.0
+    else
+                    nil
+    end
+
     Item.create!(
       title: item['title'],
       description: item['description'],
@@ -32,6 +40,7 @@ Given('the following items exist:') do |table|
       category: category,
       for_sale: item['for_sale'] == 'true',
       for_lend: item['for_lend'] == 'true',
+      price: price_value,
       condition: item['condition'] || 'Good',
       location: item['location'] || 'College Station, TX'
     )

@@ -41,4 +41,48 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+  describe "GET #incoming_requests" do
+    let!(:incoming_req1) { create(:request, item: item1, user: other_user, status: 'pending') }
+    let!(:incoming_req2) { create(:request, item: item2, user: other_user, status: 'approved') }
+    let!(:other_incoming) { create(:request, item: other_item, user: user, status: 'pending') }
+
+    context "when user is not authenticated" do
+      it "redirects to the login path" do
+        get :incoming_requests, params: { id: user.to_param }
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
+    context "when user is authenticated as the owner" do
+      before do
+        allow(controller).to receive(:authenticate_user!).and_return(true)
+        allow(controller).to receive(:current_user).and_return(user)
+
+        get :incoming_requests, params: { id: user.to_param }
+      end
+
+      it "assigns only requests for the user's items to @incoming_requests" do
+        expect(assigns(:incoming_requests)).to include(incoming_req1, incoming_req2)
+        expect(assigns(:incoming_requests)).not_to include(other_incoming)
+      end
+
+      it "renders the incoming_requests template" do
+        expect(response).to render_template(:incoming_requests)
+      end
+    end
+
+    context "when viewing another user's incoming requests" do
+      before do
+        allow(controller).to receive(:authenticate_user!).and_return(true)
+        allow(controller).to receive(:current_user).and_return(other_user)
+      end
+
+      it "redirects with access denied" do
+        get :incoming_requests, params: { id: user.to_param }
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eq("Access denied.")
+      end
+    end
+  end
 end

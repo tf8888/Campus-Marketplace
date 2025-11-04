@@ -33,15 +33,20 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :requests, only: [ :show, :new, :create ] do
+  resources :requests, only: [ :show, :new, :create, :destroy ] do
+    member do
+      patch :approve
+      patch :reject
+    end
     resources :messages, only: [ :create ]
-    resource :rating, only: [ :new, :create ], controller: "ratings"
+    resource :rating, only: [ :new, :create ], controller: "rating"
   end
 
   resources :users, only: [ :show ] do
     member do
       get :items
       get :requests
+      get :incoming_requests
     end
   end
 

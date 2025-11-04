@@ -8,6 +8,7 @@
             <li><%= link_to "Browse", items_path %></li>
             <li><%= link_to "My Listings", items_user_path(current_user) %></li>
             <li><%= link_to "My Requests", requests_user_path(current_user) %></li>
+            <li><%= link_to "Incoming Requests", incoming_requests_user_path(current_user) %></li>
         </ul>
     <% end %>
 

@@ -6,8 +6,31 @@
   <div class="page__container request-show-container">
 
     <header class="page__header">
-      <h1>Request for <%= link_to @request.item.title, item_path(@request.item) %></h1>
-      <p>Conversation between you and 
+      <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+        <div style="display:flex; align-items:center; gap: 12px; flex-wrap: wrap;">
+          <h1 style="margin: 0;">Request for <%= link_to @request.item.title, item_path(@request.item) %></h1>
+          <%# status pill %>
+          <% status_color = case @request.status
+            when 'approved' then '#16a34a'  # green
+            when 'pending' then '#d97706'   # amber
+            when 'rejected' then '#dc2626'  # red
+            else '#6b7280'                  # gray
+          end %>
+          <span style="display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; color: white; background: <%= status_color %>;">
+            <%= @request.status.to_s.capitalize.presence || 'Pending' %>
+          </span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap: wrap;">
+          <%= link_to "Back to requests", requests_user_path(current_user), class: "btn btn--secondary", title: "Back to your requests" %>
+          <%= button_to "Delete request", @request,
+                method: :delete,
+                data: { turbo_confirm: "Are you sure you want to delete this request?" },
+                class: "btn btn--danger",
+                title: "Delete this request" %>
+        </div>
+      </div>
+
+      <p style="margin-top: .5rem; color:#4b5563;">Conversation between you and 
         <% if @request.item.user == current_user %>
           <%= link_to @request.user.name, user_path(@request.user) %>
         <% else %>
@@ -16,19 +39,51 @@
       </p>
     </header>
 
-    <div class="request-show-actions">
-      <%= link_to "Back to requests", requests_user_path(current_user), class: "btn btn--secondary" %>
-      <%= button_to "Destroy this request", @request, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn--danger" %>
-      
+    <div class="request-show-actions" style="display:flex; align-items:center; gap: 10px; flex-wrap: wrap;">
+      <%# Buyer: can rate once approved %>
       <% if @request.user == current_user && @request.status == 'approved' && @request.rating.nil? %>
-        <%= link_to 'Leave a Rating', new_request_rating_path(@request), class: 'btn btn--primary' %>
-      <% elsif @request.rating.present? %>
-        <span class="badge badge-verified">You rated this: <%= @request.rating.score %>/10</span>
+        <%= link_to 'Leave a Rating', new_request_rating_path(@request), class: 'btn btn--primary', title: 'Leave a rating for this transaction' %>
+      <% elsif @request.user == current_user && @request.rating.present? %>
+        <span class="badge badge-verified" title="Your rating">You rated this: <%= @request.rating.score %>/10</span>
+      <% end %>
+
+      <%# Seller: can approve/reject when pending %>
+      <% if @request.item.user == current_user && @request.status == 'pending' %>
+        <%= button_to 'Approve Request', approve_request_path(@request), method: :patch, class: 'btn btn--primary', title: 'Approve this request' %>
+        <%= button_to 'Reject Request', reject_request_path(@request), method: :patch, class: 'btn btn--secondary', data: { turbo_confirm: 'Are you sure you want to reject this request?' }, title: 'Reject this request' %>
       <% end %>
     </div>
 
     <div class="request-show-content">
+      <%# Transaction summary card %>
+      <section class="card" style="margin-bottom: 1rem; padding: 1rem; display:flex; gap: 16px; align-items: center;">
+        <% if @request.item.image_url.present? %>
+          <div style="width: 96px; height: 96px; border-radius: 8px; overflow: hidden; border: 1px solid #eee;">
+            <%= image_tag @request.item.image_url, alt: @request.item.title, style: 'width:100%;height:100%;object-fit:cover;' %>
+          </div>
+        <% end %>
+        <div style="flex:1; min-width: 0;">
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap: wrap;">
+            <% if @request.item.price.present? %>
+              <span style="font-weight:700; color:#0a7;"> <%= number_to_currency(@request.item.price) %> </span>
+            <% end %>
+            <span class="item-show-tag <%= @request.item.for_sale? ? 'sale' : 'lend' %>">
+              <%= @request.item.for_sale? ? 'For Sale' : 'For Lend' %>
+            </span>
+          </div>
+          <div style="margin-top: 4px; color:#4b5563; font-size: 0.95rem;">
+            <span><strong>Condition:</strong> <%= @request.item.condition %></span>
+            ·
+            <span><strong>Category:</strong> <%= @request.item.category.name %></span>
+            <% if @request.item.location.present? %>
+              · <span><strong>Location:</strong> <%= @request.item.location %></span>
+            <% end %>
+          </div>
+        </div>
+        
+      </section>
       <%# Messaging Conversation Section %>
+      <h2 style="margin: .5rem 0;">Conversation</h2>
       <div id="messages" class="messages-conversation">
         <%= render partial: "messages/message", locals: { message: Message.build(content: @request.message, created_at: @request.created_at, sender: @request.user) } %>
         <% @messages.each do |message| %>
@@ -37,6 +92,7 @@
       </div>
 
       <%# New Message Form %>
+      <h3 style="margin: 1rem 0 .5rem;">Send a new message</h3>
       <div class="new-message-form">
         <%= render partial: "messages/form", locals: { request: @request } %>
       </div>

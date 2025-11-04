@@ -57,6 +57,12 @@
       </div>
       
       <div class="form-group">
+        <%= form.label :price, "Price (USD)" %>
+        <%= form.number_field :price, step: 0.01, min: 0, placeholder: "0.00" %>
+        <p class="help-text">Required for items for sale, optional for items for lend.</p>
+      </div>
+      
+      <div class="form-group">
         <%= form.label :category_id, "Category" %>
         <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select a category' }, required: true %>
       </div>
