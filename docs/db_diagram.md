@@ -24,14 +24,16 @@ erDiagram
       string  address
       string  contact_number
       boolean verified
-      timestamps
+      datetime created_at
+      datetime updated_at
     }
 
     CATEGORIES {
       integer id PK
       string  name
       text    description
-      timestamps
+      datetime created_at
+      datetime updated_at
     }
 
     ITEMS {
@@ -47,7 +49,8 @@ erDiagram
       decimal price
       integer user_id FK
       integer category_id FK
-      timestamps
+      datetime created_at
+      datetime updated_at
     }
 
     REQUESTS {
@@ -56,7 +59,8 @@ erDiagram
       integer user_id FK
       string  status  "pending|approved|rejected"
       text    message
-      timestamps
+      datetime created_at
+      datetime updated_at
     }
 
     MESSAGES {
@@ -66,7 +70,8 @@ erDiagram
       integer request_id FK
       integer sender_id  FK "users.id"
       integer receiver_id FK "users.id"
-      timestamps
+      datetime created_at
+      datetime updated_at
     }
 
     RATINGS {
@@ -75,10 +80,20 @@ erDiagram
       integer rater_id FK "users.id"
       integer ratee_id FK "users.id"
       integer request_id FK
-      timestamps
+      datetime created_at
+      datetime updated_at
     }
 ```
 
-Legend:
-- FK edges show ownership/association direction; many-to-one is encoded by Mermaid cardinalities.
-- There is a uniqueness constraint on `ratings (rater_id, request_id)` and on `requests (item_id, user_id)`.
+---
+
+### Legend
+
+- **PK** → Primary Key  
+- **FK** → Foreign Key  
+- **One-to-many relationships** are shown using Mermaid cardinalities (`||--o{`).  
+- **Unique constraints:**
+  - `ratings (rater_id, request_id)`
+  - `requests (item_id, user_id)`  
+
+---
