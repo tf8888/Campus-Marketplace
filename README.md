@@ -54,8 +54,13 @@ See `docs/testing_documentation.md` for RSpec/Cucumber usage and coverage.
 More details in the Technical documentation.
 
 ## Links
-Slack Channel : https://join.slack.com/t/csce606project2group5/shared_invite/zt-3hfxd0frb-Exfc1ezNndK3eEedNx1p6w
-Github Board : https://github.com/orgs/tamu-edu-students/projects/161
+- Slack Channel : https://join.slack.com/t/csce606project2group5/shared_invite/zt-3hfxd0frb-Exfc1ezNndK3eEedNx1p6w
+- Github Board : https://github.com/orgs/tamu-edu-students/projects/161
+- Deployed Application Link : https://campus-exchange-4bbf1a6019a9.herokuapp.com/login
+
+
+## Important Note
+For profile verification, we used the Twilio add-on. Since we are using the free plan, only a limited set of pre-approved phone numbers can receive verification text messages. Therefore, if a user attempts to verify their profile using any other number, the verification will not work.
 
 
 ## License
