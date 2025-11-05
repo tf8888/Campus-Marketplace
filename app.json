@@ -1,0 +1,63 @@
+{
+  "name": "Campus Exchange",
+  "description": "A lightweight Rails web app for students to lend, borrow, and coordinate items within their campus community",
+  "repository": "https://github.com/tamu-edu-students/CSCE606-group5-project2",
+  "keywords": [
+    "rails",
+    "ruby",
+    "campus",
+    "exchange",
+    "lending"
+  ],
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "env": {
+    "RAILS_ENV": {
+      "description": "Rails environment",
+      "value": "test",
+      "required": true
+    },
+    "RAILS_MASTER_KEY": {
+      "description": "Rails master key for encrypted credentials (required for Twilio). Set this in Heroku Pipeline settings.",
+      "required": true
+    },
+    "GOOGLE_CLIENT_ID": {
+      "description": "Google OAuth client ID for authentication",
+      "value": "test_client_id",
+      "required": false
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "description": "Google OAuth client secret for authentication",
+      "value": "test_client_secret",
+      "required": false
+    },
+    "CLOUDINARY_URL": {
+      "description": "Cloudinary URL for image uploads (optional in CI)",
+      "required": false
+    }
+  },
+  "environments": {
+    "test": {
+      "addons": [
+        "heroku-postgresql"
+      ],
+      "scripts": {
+        "test-setup": "bundle exec rails db:create db:schema:load --trace",
+        "test": "bundle exec rake spec && bundle exec cucumber"
+      }
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "stack": "heroku-22"
+}
