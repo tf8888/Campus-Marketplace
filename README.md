@@ -342,6 +342,11 @@ Deployment instructions will be added once the application is production-ready.
 Potential platforms:
 - Heroku
 
+## Links
+Slack Channel : https://join.slack.com/t/csce606project2group5/shared_invite/zt-3hfxd0frb-Exfc1ezNndK3eEedNx1p6w
+Github Board : https://github.com/orgs/tamu-edu-students/projects/161
+
+
 ## License
 
 This project is part of CSCE 606 coursework at Texas A&M University.
