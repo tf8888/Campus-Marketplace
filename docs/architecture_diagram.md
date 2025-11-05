@@ -6,7 +6,7 @@ flowchart TD
       A[Browser]
     end
 
-    subgraph RailsApp[Campus Lend & Borrow (Rails 8)]
+    subgraph RailsApp[Campus Lend and Borrow - Rails 8]
       B[Controllers\n- Items\n- Requests\n- Messages\n- Ratings\n- Profiles\n- Sessions]
       C[Models\nUser, Item, Request, Message, Rating, Category]
       D[Views (ERB) + Turbo/Stimulus]
@@ -27,7 +27,7 @@ flowchart TD
     B -- ImageUploader.upload() --> F
 
     %% External services
-    subgraph External Services
+    subgraph ExternalServices[External Services]
       G[Cloudinary\nProduction image storage]
       H[Google OAuth2\nAuthentication]
       I[Twilio Verify\nSMS verification]
@@ -44,7 +44,9 @@ flowchart TD
     B -- send_verification_code / check_verification_code --> I
 ```
 
-Notes:
+---
+
+### Notes
 - In development/test, images are saved under `public/uploads/...` and served directly by Rails.
 - In production, images are uploaded to Cloudinary and the secure URL is stored in `items.image_url`.
 - Twilio credentials live in Rails encrypted credentials; Google OAuth client ID/secret live in `.env` for local dev.
