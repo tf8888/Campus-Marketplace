@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       patch :reject
     end
     resources :messages, only: [ :create ]
-    resource :rating, only: [ :new, :create ], controller: "rating"
+    resource :rating, only: [ :new, :create ]
   end
 
   resources :users, only: [ :show ] do
