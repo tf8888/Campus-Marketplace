@@ -1,0 +1,78 @@
+<% content_for :title, "My Requests · Campus Exchange" %>
+<%# Scoped styles to ensure consistent thumbnail sizing for request cards %>
+<% content_for :head do %>
+    <style>
+        .item-card.item-card--horizontal { display: flex; align-items: center; gap: 12px; }
+        .item-card.item-card--horizontal .item-card-thumb { width: 96px; height: 96px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; flex: 0 0 auto; }
+        .item-card.item-card--horizontal .item-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .item-card.item-card--horizontal .item-card-actions { padding-right: 16px; display: flex; gap: 8px; align-items: center; white-space: nowrap; }
+    </style>
+<% end %>
+
+<main class="page" role="main">
+    <div class="page__container">
+        <header class="page__header">
+            <div style="display:flex; align-items:center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <h1 style="margin:0;">My Requests</h1>
+                <%= link_to "Browse Items", items_path, class: "btn btn--primary" %>
+            </div>
+        </header>
+
+        <% if @requests.present? %>
+            <section class="page__content">
+                <div class="items-container-horizontal">
+                    <% @requests.each do |request| %>
+                        <div class="item-card item-card--horizontal">
+                            <% if request.item.image_url.present? %>
+                                <div class="item-card-thumb">
+                                    <%= image_tag request.item.image_url, alt: request.item.title %>
+                                </div>
+                            <% end %>
+
+                            <div class="item-card-content">
+                                <div style="display:flex; align-items:center; gap: 10px; flex-wrap: wrap;">
+                                    <h3 class="item-card-title" style="margin:0;">
+                                        <%= link_to request.item.title, item_path(request.item) %>
+                                    </h3>
+                                    <% status_class = case request.status
+                                        when 'approved' then 'status--approved'
+                                        when 'pending' then 'status--pending'
+                                        when 'rejected' then 'status--rejected'
+                                        else 'status--other'
+                                    end %>
+                                    <span class="status-pill <%= status_class %>"><%= request.status.to_s.capitalize.presence || 'Pending' %></span>
+                                    <% if request.rating.present? %>
+                                      <span class="badge badge-verified">You rated: <%= request.rating.score %>/10</span>
+                                    <% end %>
+
+                                    <span class="item-card-tag <%= request.item.for_sale? ? 'sale' : 'lend' %>"><%= request.item.for_sale? ? 'For Sale' : 'For Lend' %></span>
+
+                                    <% if request.item.price.present? %>
+                                        <span class="item-card-price item-card-price--emphasis"> <%= number_to_currency(request.item.price) %> </span>
+                                    <% end %>
+                                </div>
+
+                                <p class="item-card-description" style="margin:.25rem 0 0;">
+                                    <strong>Seller:</strong> <%= link_to request.item.user.name, user_path(request.item.user) %>
+                                    · <strong>Requested on:</strong> <%= l(request.created_at, format: :short) rescue request.created_at.strftime('%Y-%m-%d') %>
+                                </p>
+                            </div>
+
+                            <div class="item-card-actions">
+                                <%= link_to "View", request_path(request), class: "btn btn--primary" %>
+                                <% if request.status == 'approved' && request.rating.nil? %>
+                                    <%= link_to "Rate", new_request_rating_path(request), class: "btn btn--secondary" %>
+                                <% end %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </section>
+        <% else %>
+            <div class="card empty">
+                <p>No requests found. Start by browsing items you’re interested in.</p>
+            </div>
+        <% end %>
+
+    </div>
+</main>

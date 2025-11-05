@@ -1,0 +1,22 @@
+<nav class="navbar" role="navigation" aria-label="Primary">
+  <div class="navbar__inner">
+    <div class="navbar__brand">
+      <%= link_to "🎒 Campus Exchange", root_path, class: "navbar__logo" %>
+    </div>
+    <% if defined?(current_user) && current_user.present? %>
+        <ul class="navbar__links">
+            <li><%= link_to "Browse", items_path %></li>
+            <li><%= link_to "My Listings", items_user_path(current_user) %></li>
+            <li><%= link_to "My Requests", requests_user_path(current_user) %></li>
+            <li><%= link_to "Incoming Requests", incoming_requests_user_path(current_user) %></li>
+        </ul>
+    <% end %>
+
+    <div class="navbar__actions">
+      <% if defined?(current_user) && current_user.present? %>
+        <%= link_to "Profile", edit_profile_path, class: "btn btn--secondary" %>
+        <%= link_to "Logout", logout_path, class: "btn btn--primary" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

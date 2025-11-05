@@ -1,0 +1,60 @@
+Rails.application.routes.draw do
+  if Rails.env.development?
+    get "/dev/login_as/:user_id", to: "development#login_as", as: :dev_login
+  end
+
+  get "profiles/show"
+  get "profiles/edit"
+  get "profiles/update"
+  resources :requests
+  get "home/index"
+  root "home#index"
+
+  # OAuth routes
+  get "/auth/:provider/callback", to: "sessions#create"
+  get "/auth/failure", to: "sessions#failure"
+
+  # Sessions (regular login)
+  get "/login", to: "sessions#login"
+  # post "/login", to: "sessions#create"
+  get "/logout", to: "sessions#destroy"
+
+  # Messages are nested under requests; remove legacy singular route
+
+  # Health check
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  resources :items do
+    member do
+      patch :mark_unavailable
+    end
+    collection do
+      get :my_listings
+    end
+  end
+
+  resources :requests, only: [ :show, :new, :create, :destroy ] do
+    member do
+      patch :approve
+      patch :reject
+    end
+    resources :messages, only: [ :create ]
+    resource :rating, only: [ :new, :create ]
+  end
+
+  resources :users, only: [ :show ] do
+    member do
+      get :items
+      get :requests
+      get :incoming_requests
+    end
+  end
+
+  resource :profile, only: [ :show, :edit, :update ] do
+    patch :send_verification_code
+    post :check_verification_code
+  end
+
+  resources :users, only: [ :show ] do
+  end
+end

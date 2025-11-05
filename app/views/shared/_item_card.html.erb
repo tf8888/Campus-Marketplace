@@ -1,0 +1,30 @@
+<div class="item-card">
+  <% if item.image_url.present? %>
+    <div class="item-card-thumb" style="width: 100%; height: 160px; overflow: hidden; border-bottom: 1px solid #eee;">
+      <%= image_tag item.image_url, alt: item.title, style: "width: 100%; height: 100%; object-fit: cover;" %>
+    </div>
+  <% end %>
+
+  <div class="item-card-content">
+    <h3 class="item-card-title"><%= item.title %></h3>
+
+    <%# Prominent price line for sale items %>
+    <% if item.price.present? %>
+      <p class="item-card-price" style="margin: 0.25rem 0; font-weight: 600; color: #0a7;">
+        $<%= number_with_precision(item.price, precision: 2) %>
+      </p>
+    <% end %>
+
+    <p class="item-card-description"><%= truncate(item.description, length: 100) %></p>
+
+    <div class="item-card-footer">
+      <span class="item-card-condition"><strong>Condition:</strong> <%= item.condition %></span>
+      <span class="item-card-price"><strong>Price:</strong> $<%= number_with_precision(item.price, precision: 2) %></span>
+      <% if item.for_sale? %>
+        <span class="item-card-tag sale">For Sale</span>
+      <% else %>
+        <span class="item-card-tag lend">For Lend</span>
+      <% end %>
+    </div>
+  </div>
+</div>

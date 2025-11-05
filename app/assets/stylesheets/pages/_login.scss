@@ -1,0 +1,29 @@
+// Minimal styles for the sessions#login page
+.login-page { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+
+.login-card {
+  background: #fff;
+  width: 100%;
+  max-width: 520px;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  overflow: hidden;
+}
+
+.login-header { text-align: center; padding: 20px 20px 0; }
+.login-logo { font-size: 40px; line-height: 1; margin-bottom: 8px; }
+.login-header h1 { font-size: 24px; font-weight: 700; margin: 0 0 6px; }
+.login-header p { margin: 0; color: $color-muted; }
+.login-header .badge { display: none; }
+
+.login-content { padding: 20px; }
+
+.login-features { display: grid; gap: 8px; margin-bottom: 16px; }
+.feature { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: #f9fafb; border: 1px solid $color-border; border-radius: $radius-md; }
+.feature-icon { font-size: 18px; flex-shrink: 0; }
+.feature-text { font-size: 14px; color: $color-text; }
+
+.divider { display: flex; align-items: center; gap: 10px; margin: 16px 0; color: $color-muted; font-size: 14px; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: $color-border; }
+
+.login-footer { text-align: center; padding: 12px 16px; border-top: 1px solid $color-border; font-size: 12px; color: $color-muted; background: #f9fafb; }

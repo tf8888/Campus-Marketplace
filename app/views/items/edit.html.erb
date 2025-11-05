@@ -1,0 +1,94 @@
+<%# Change the title %>
+<% content_for :title, "Edit Listing · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container" style="max-width: 700px;">
+    <header class="page__header">
+      <%# Change the header %>
+      <h1>Edit Listing</h1>
+      <p class="page__sub">Update the details for your item.</p>
+    </header>
+
+    <%# This form_with(model: @item) is "smart"
+        Because @item is an existing record, Rails will
+        automatically send this form to the UPDATE action (PATCH)
+        instead of the CREATE action (POST).
+    %>
+  <%= form_with(model: @item, class: "form-card", html: { multipart: true }) do |form| %>
+      
+      <%# This error block is the same %>
+      <% if @item.errors.any? %>
+        <div class="form-errors">
+          <h4><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h4>
+          <ul>
+            <% @item.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%# All the form fields are identical to new.html.erb %>
+      <div class="form-group">
+        <%= form.label :title %>
+        <%= form.text_field :title, required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :description %>
+        <%= form.text_area :description, rows: 5 %>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label>Listing Type (Must choose one)</label>
+        <div class="checkbox-option">
+          <%= form.check_box :for_sale %>
+          <%= form.label :for_sale, "Item is For Sale" %>
+        </div>
+        <div class="checkbox-option">
+          <%= form.check_box :for_lend %>
+          <%= form.label :for_lend, "Item is For Lend" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :condition %>
+        <%= form.select :condition, ['New', 'Used - Like New', 'Used - Good', 'Used - Fair'], { prompt: 'Select a condition' } %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :price, "Price (USD)" %>
+        <%= form.number_field :price, step: 0.01, min: 0, placeholder: "0.00" %>
+        <p class="help-text">Required for items for sale, optional for items for lend.</p>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :category_id, "Category" %>
+        <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select a category' }, required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :location %>
+        <%= form.text_field :location %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :image_file, "Upload Image (Optional)" %>
+        <%= form.file_field :image_file, accept: "image/*" %>
+        <p class="help-text">JPEG, PNG, GIF, WEBP. Max 10MB.</p>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :image_url, "Or paste an Image URL (Optional)" %>
+        <%= form.text_field :image_url, placeholder: "https://example.com/image.png" %>
+      </div>
+
+      <div class="form-actions">
+        <%# Change the submit button text %>
+        <%= form.submit "Update Listing", class: "btn btn--primary" %>
+        <%= link_to "Cancel", item_path(@item), class: "btn btn--secondary" %>
+      </div>
+    <% end %>
+    
+  </div>
+</main>

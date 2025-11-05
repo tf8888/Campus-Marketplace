@@ -1,0 +1,8 @@
+// Minimal page layout styles
+.page { padding: 20px; min-height: calc(100vh - 50px); }
+.page__container { max-width: 1100px; margin: 0 auto; }
+.page__header { margin-bottom: 16px; }
+.page__header h1 { margin: 0 0 6px; font-size: 24px; }
+.page__sub { margin: 0; color: $color-muted; }
+.page__content { display: grid; gap: 12px; }
+.card.empty { padding: 16px; border: 1px solid $color-border; border-radius: $radius-md; background: #f9fafb; }

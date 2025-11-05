@@ -1,0 +1,34 @@
+default: &default
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  adapter: sqlite3
+  database: storage/development.sqlite3
+  <<: *default
+
+test:
+  adapter: sqlite3
+  database: storage/test.sqlite3
+  <<: *default
+
+production:
+  # Use Heroku's DATABASE_URL for all roles. Define role-based configs so
+  # Rails and gems that call `connects_to` (solid_queue, Action Cable, etc.)
+  # can resolve symbols like `queue`, `cable`, and `cache` in production.
+  primary:
+    &primary
+    <<: *default
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    url: <%= ENV['DATABASE_URL'] %>
+
+  cable:
+    <<: *primary
+
+  queue:
+    <<: *primary
+
+  cache:
+    <<: *primary

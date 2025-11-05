@@ -1,0 +1,4 @@
+<div class="message <%= message.sender == current_user ? 'message--sent' : 'message--received' %>">
+  <p class="message__content"><%= message.content %></p>
+  <span class="message__timestamp"><%= message.created_at.strftime("%b %d, %Y %I:%M %p") %></span>
+</div>

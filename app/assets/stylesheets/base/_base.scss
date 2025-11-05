@@ -1,0 +1,41 @@
+// Minimal color system
+$color-primary: #2563eb; // blue-600
+$color-primary-2: #1e40af; // blue-800
+$color-bg: #f9fafb;       // gray-50
+$color-text: #111827;     // gray-900
+$color-muted: #6b7280;    // gray-500
+$color-border: #e5e7eb;   // gray-200
+
+// Radii and shadows (keep it subtle)
+$shadow-lg: 0 1px 2px rgba(0, 0, 0, 0.06);
+$radius-lg: 12px;
+$radius-md: 8px;
+
+// Base reset (lightweight)
+html {
+	box-sizing: border-box;
+}
+
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+	color: $color-text;
+	background: $color-bg;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+img { max-width: 100%; display: block; }
+
+// Utilities
+.container-narrow { max-width: 480px; margin: 0 auto; }
+.text-center { text-align: center; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }

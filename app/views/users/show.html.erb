@@ -1,0 +1,85 @@
+<% content_for :title, "#{@user.name}'s Profile · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container" style="display: flex; gap: 2rem;">
+
+    <aside class="profile-sidebar" style="flex: 0 0 280px;">
+      <header class="page__header" style="margin-bottom: 1.5rem;">
+        <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+          <h1 style="margin:0;"><%= @user.name %></h1>
+
+          <% if current_user == @user %>
+            <%= link_to "View Requests", requests_user_path(@user), class: "btn btn--secondary" %>
+          <% end %>
+        </div>
+        <br>
+        <div>
+          <% if @user.verified? %>
+            <span class="badge badge-verified">
+              ✔ Verified
+            </span>
+          <% else %>
+            <span class="badge badge-not-verified">
+              Not Verified
+            </span>
+          <% end %>
+        </div>
+      </header>
+
+      <div class="profile-details">
+        
+        <% if @user.contact_number.present? %>
+          <div style="margin-bottom: 1rem;">
+            <strong>Contact:</strong>
+            <p style="margin: 0;"><%= @user.contact_number %></p>
+          </div>
+        <% end %>
+
+        <% if @user.address.present? %>
+          <div style="margin-bottom: 1rem;">
+            <strong>Address:</strong>
+            <p style="margin: 0; white-space: pre-wrap;"><%= @user.address %></p>
+          </div>
+        <% end %>
+
+        <% if (avg_rating = @user.average_rating) %>
+          <div style="margin-bottom: 1rem;">
+            <strong>Seller Rating:</strong>
+            <p style="margin: 0; font-weight: bold; font-size: 1.1em;">
+              <%= "%.1f" % avg_rating %> / 10.0
+            </p>
+            <small>(<%= pluralize(@user.ratings_received.count, 'rating') %>)</small>
+          </div>
+        <% end %>
+        
+      </div>
+    </aside>
+
+    <div class="main-content" style="flex: 1;">
+      
+      <h2 style="margin-top: 0;">All items listed by <%= @user.name %>:</h2>
+
+      <div class="items-list-container">
+        <% if @items.any? %>
+          <% @items.each do |item| %>
+            <div style="border: 1px solid #eee; padding: 16px; margin-bottom: 16px;">
+              <h4>
+                <%= link_to item.title, item_path(item) %>
+                <% if item.for_sale? %>
+                  <span style="font-size: 0.8em; color: green; margin-left: 8px;">For Sale</span>
+                <% else %>
+                  <span style="font-size: 0.8em; color: blue; margin-left: 8px;">For Lend</span>
+                <% end %>
+              </h4>
+              <p><%= item.description %></p>
+              <small>Condition: <%= item.condition %></small>
+            </div>
+          <% end %>
+        <% else %>
+          <p><%= @user.name %> has no items listed.</p>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</main>

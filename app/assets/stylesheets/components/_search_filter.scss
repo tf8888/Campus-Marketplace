@@ -1,0 +1,75 @@
+.search-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filter-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-item {
+  display: flex;
+}
+
+.filter-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-text;
+  margin-right: 8px;
+  align-self: center;
+}
+
+.filter-select {
+  padding: 10px 12px;
+  border: 1px solid $color-border;
+  border-radius: 8px; // slightly more rounded for better look
+  background: #fff;
+  color: $color-text;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.filter-select:hover {
+  border-color: $color-primary;
+}
+
+.search-bar {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid $color-border;
+  border-radius: 8px; // match selects
+  background: #fff;
+  color: $color-text;
+  font-size: 14px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.search-bar::placeholder {
+  color: $color-muted;
+}
+
+.search-bar:focus {
+  border-color: $color-primary;
+  outline: none;
+}
+
+// Make the search bar section expand to fill remaining space on the row
+.search-filter {
+  
+  .filter-group:last-child {
+    flex: 1;
+  }
+
+  .filter-group:last-child .filter-item {
+    flex: 1;
+  }
+
+  .filter-group:last-child .search-bar {
+    width: 100%;
+  }
+}

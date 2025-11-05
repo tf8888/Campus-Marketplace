@@ -1,0 +1,70 @@
+<% content_for :title, "Browse Items · Campus Exchange" %>
+
+<main class="page" role="main">
+  <div class="page__container">
+    <header class="page__header">
+      <div style="display:flex; align-items:center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h1 style="margin:0;">Browse Items</h1>
+          <p class="page__sub" style="margin: 4px 0 0;">Find what you're looking for.</p>
+        </div>
+        <%= link_to "Add Listing", new_item_path, class: "btn btn--primary" %>
+      </div>
+    </header>
+
+    <%= form_with url: items_path, method: :get, class: "search-filter" do |form| %>
+      <div class="filter-group">
+        <%# --- CATEGORY DROPDOWN --- %>
+        <div class="filter-item">
+          <%= form.label :category_id, "Category", class: "filter-label" %>
+          <%= form.select :category_id, options_for_select([["All Categories", ""]] + Category.all.map { |c| [c.name, c.id] }, selected: params[:category_id]), class: "filter-select" %>
+        </div>
+
+        <%# --- SORT BY DROPDOWN --- %>
+        <div class="filter-item">
+          <%= form.label :sort_by, "Sort by", class: "filter-label" %>
+          <%= form.select :sort_by, options_for_select([["Title", "title"], ["Price", "price"], ["Condition", "condition"], ["Created At", "created_at"]], selected: params[:sort_by]), class: "filter-select" %>
+        </div>
+
+        <%# --- ORDER DROPDOWN --- %>
+        <div class="filter-item">
+          <%= form.label :order, "Order", class: "filter-label" %>
+          <%= form.select :order, options_for_select([["Ascending", "asc"], ["Descending", "desc"]], selected: params[:order]), class: "filter-select" %>
+        </div>
+
+        <%= form.submit "Apply Filters", class: "filter-item btn btn--primary" %>
+      </div>
+      <div class="filter-group">
+        <div class="filter-item">
+          <%= form.text_field :query, 
+            value: @search_query, 
+            placeholder: "Search for laptops, textbooks, etc...",
+            class: "search-bar" %>
+          <%= form.submit "Search", class: "btn btn--primary" %>
+        </div>
+      </div>
+    <% end %>
+
+    <%# --- RESULTS SECTION --- %>
+    <section class="page__content">
+      
+      <% if @items.any? %>
+        <%# We use the same card grid as the homepage for consistent styling %>
+        <div class="items-container">
+          <% @items.each do |item| %>
+            <%= link_to item_path(item), class: "item-card-link" do %>
+              <%= render "shared/item_card", item: item %>
+            <% end %>
+          <% end %>
+        </div>
+
+      <% else %>
+        <%# This shows if the search had 0 results %>
+        <div class="card empty">
+          <p>No items found.</p>
+        </div>
+      <% end %>
+    </section>
+
+  </div>
+</main>

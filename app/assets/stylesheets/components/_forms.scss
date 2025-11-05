@@ -1,0 +1,119 @@
+.add-new-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 2px dashed #ccc;
+  background-color: #f9f9f9;
+  color: #555;
+  min-height: 200px;
+  
+  span {
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+  
+  h3 {
+    margin-top: 8px;
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+    border-color: #aaa;
+  }
+}
+
+/* Basic Form Styling */
+.form-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Important! */
+  }
+
+  /* Make number inputs visually consistent across browsers */
+  input[type="number"] {
+    appearance: textfield; /* modern */
+    -moz-appearance: textfield; /* Firefox */
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Chrome/Safari */
+    margin: 0;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+}
+
+/* Optional helper text styling under inputs */
+.help-text {
+  margin-top: 6px;
+  color: #6b7280; /* gray-500 */
+  font-size: 0.875rem; /* 14px */
+}
+
+.checkbox-group {
+  .checkbox-option {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+    }
+    
+    label {
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.form-errors {
+  padding: 16px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  
+  h4 { margin: 0 0 10px 0; }
+  ul { margin: 0; padding-left: 20px; }
+}
