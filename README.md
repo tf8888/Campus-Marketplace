@@ -15,6 +15,11 @@ A lightweight Rails web app for students to lend, borrow, and coordinate items w
 	- ADR-002 Google OAuth: `docs/architecture_records/adr-002-google-oauth.md`
 	- ADR-003 Twilio Verify: `docs/architecture_records/adr-003-twilio-verify.md`
 	- ADR-004 Image upload service: `docs/architecture_records/adr-004-image-upload-service.md`
+- Scrum Events: `docs/scrum events/`
+	- Scrum events overview: `docs/scrum events/scrum_events.md`
+	- Sprint planning: `docs/scrum events/scrum_planning.md`
+	- Sprint review: `docs/scrum events/sprint_review.md`
+	- Sprint retrospective: `docs/scrum events/sprint_retrospective.md`
 
 ## Overview
 
